@@ -1,5 +1,5 @@
-src/context
-src/hooks
-src/redux
-src/service
-src/utils
+context
+hooks
+redux
+service
+utils
