@@ -1,0 +1,80 @@
+.select {
+  border-right: 1px solid #ccc;
+}
+
+.menu {
+  transition: all ease-in-out 0.3s;
+}
+
+.menu:hover {
+  transform: rotateY(180deg);
+}
+
+.head,
+.headText {
+  transition: all ease-in-out 0.3s;
+}
+
+.head:hover {
+  transform: rotateY(180deg);
+  color: #f04706;
+}
+
+.headText:hover {
+  color: #f04706;
+}
+
+.search {
+  position: relative;
+  overflow: hidden;
+}
+
+.search::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0%;
+  height: 100%;
+  background: #f04706;
+  transition: all 0.4s ease-in-out;
+}
+
+.search:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+.search i,
+.search span {
+  position: relative;
+  z-index: 1;
+}
+
+.links {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s ease-in-out;
+}
+
+.links::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: #1f2937;
+  transition: width 0.4s ease-in-out;
+  z-index: -1;
+}
+
+.links:hover::before {
+  width: 100%;
+}
+
+.links:hover {
+  color: white !important;
+}

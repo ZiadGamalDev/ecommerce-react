@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import "./App.css";
-import LayOut from "./components/LayOut/LayOut";
-import NotFound from "./components/NotFound/NotFound";
-
+import LayOut from "../layouts/Layout.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { lazy, Suspense } from "react";
+import NotFound from "../components/NotFound/NotFound.jsx";
+import Loader from "../components/Loader/Loader.jsx";
+import About from "../pages/About/About.jsx";
+import Contact from "../pages/Contact/Contact.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
 
@@ -17,12 +18,28 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader />}>
             <Home />
           </Suspense>
         ),
       },
-      { path: "*", element: <NotFound /> },
+      {
+        path: "about",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <About />
+          </Suspense>
+        ),
+      },
+      {
+        path: "contact",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Contact />
+          </Suspense>
+        ),
+      },
+      { path: "*", element: <NotFound/> },
     ],
   },
 ]);
