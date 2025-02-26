@@ -27,20 +27,19 @@ const Navbar = () => {
 
   return (
     <React.Fragment>
-      <nav className="w-full bg-[#ffcc00] position-sticky top-0">
+      <nav className="w-full bg-[#ffcc00] position-sticky top-0 z-50">
         {/* Top Nav */}
         <div className="flex justify-between items-center p-3 container">
           <img src={logo} alt="logo" />
           {/* Menu Hamburger */}
           <div className="sm:flex lg:hidden items-center gap-4">
-            <IconButton onClick={toggleDrawer}>
-              <label className="hamburger">
-                <svg viewBox="0 0 32 32">
-                  <path className="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
-                  <path className="line" d="M7 16 27 16"></path>
-                </svg>
-              </label>
-            </IconButton>
+            <div className="background" onClick={toggleDrawer}>
+              <button className="menu__icon">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
           </div>
 
           <div className="md:hidden lg:flex sm:hidden items-center gap-4 collection">
@@ -87,9 +86,11 @@ const Navbar = () => {
                 <MenuItem onClick={handleCloseUserMenu}><Typography sx={{ textAlign: 'center' }}>WishList</Typography></MenuItem>
               </Menu>
               <Tooltip title="Open Cart">
-                <IconButton>
-                  <i className="bi bi-cart text-4xl"></i>
-                </IconButton>
+                <Link to={"/cart"}>
+                  <IconButton>
+                    <i className="bi bi-cart text-4xl"></i>
+                  </IconButton>
+                </Link>
               </Tooltip>
             </div>
           </div>
@@ -156,9 +157,11 @@ const Navbar = () => {
               <MenuItem onClick={handleCloseUserMenu}><Typography sx={{ textAlign: 'center' }}>WishList</Typography></MenuItem>
             </Menu>
             <Tooltip title="Open Cart">
-              <IconButton>
-                <i className="bi bi-cart text-4xl"></i>
-              </IconButton>
+              <Link to={"/cart"}>
+                <IconButton button onClick={toggleDrawer}>
+                  <i className="bi bi-cart text-4xl"></i>
+                </IconButton>
+              </Link>
             </Tooltip>
           </div>
         </Drawer>
