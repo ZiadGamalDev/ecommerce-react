@@ -3,8 +3,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import img1 from "../../assets/images/1.avif";
-import img2 from "../../assets/images/2.jpg";
+import img1 from "../../../assets/images/1.avif";
+import img2 from "../../../assets/images/2.jpg";
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -73,7 +73,7 @@ const Slider = () => {
 
   return (
     <React.Fragment>
-      <div className="relative w-full mx-auto h-[500px] overflow-hidden">
+      <div className="relative w-full mx-auto h-[480px] overflow-hidden">
         {/* Slides */}
         {slides.map((slide, index) => (
           <div
@@ -94,16 +94,16 @@ const Slider = () => {
 
             <div
               key={currentSlide}
-              className={`absolute inset-0 flex items-center mx-3 ${
+              className={`absolute inset-0 flex items-center ${
                 index === 0
-                  ? "justify-start"
+                  ? "justify-start ms-5"
                   : index === 1
                   ? "justify-end"
                   : "justify-center"
               }`}
             >
               <div
-                className="w-full px-8 md:px-16 flex flex-col items-start max-w-lg"
+                className="w-full px-4 sm:px-6 md:px-8 lg:px-16 flex flex-col items-start max-w-lg"
                 data-aos={
                   index === 0
                     ? "fade-left"
@@ -112,26 +112,26 @@ const Slider = () => {
                     : "fade-up"
                 }
               >
-                <span className="bg-orange-500 text-white px-4 py-1 rounded text-sm mb-4">
+                <span className="bg-orange-500 text-white px-4 py-1 rounded text-xs sm:text-sm mb-3 sm:mb-4">
                   {slide.badge}
                 </span>
 
-                <h2 className="text-3xl md:text-4xl font-medium text-light mb-1">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-light mb-1 text-left sm:text-center md:text-left">
                   {slide.title}
                 </h2>
 
-                <h3 className="text-3xl md:text-4xl font-bold text-light mb-4">
+                <h3 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold text-light mb-4 text-left sm:text-center md:text-left">
                   {slide.subtitle}
                 </h3>
 
-                <div className="mb-6">
-                  <span className="text-sm text-sky-100">From</span>
-                  <span className="text-2xl text-orange-500 font-bold ml-2">
+                <div className="mb-4 sm:mb-6 text-left sm:text-center md:text-left">
+                  <span className="text-xs sm:text-sm text-sky-100">From</span>
+                  <span className="text-lg sm:text-xl md:text-2xl text-orange-500 font-bold ml-2">
                     {slide.price}
                   </span>
                 </div>
 
-                <button className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded font-medium transition-all duration-300 ease-in-out">
+                <button className="bg-gray-700 hover:bg-gray-800 text-white px-4 sm:px-6 py-2 sm:py-3 rounded font-medium transition-all duration-300 ease-in-out">
                   {slide.buttonText}
                 </button>
               </div>

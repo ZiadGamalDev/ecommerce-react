@@ -1,0 +1,20 @@
+.box {
+  transition: transform ease 0.4s;
+}
+
+.boxIcon {
+  transition: transform ease 0.4s;
+  transform: rotateY(0deg);
+}
+
+.textInfo {
+  transition: all ease 0.4s;
+}
+
+.box:hover .boxIcon {
+  transform: rotateY(180deg);
+}
+
+.box:hover .textInfo {
+  color: #f97316;
+}
