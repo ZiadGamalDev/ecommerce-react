@@ -1,2 +1,19 @@
 @import "tailwindcss";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+::selection {
+  color: #fff;
+  background-color: #f04706;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #313c46; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f04706; 
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}

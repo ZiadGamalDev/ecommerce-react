@@ -20,11 +20,13 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "framer-motion": "^12.4.7",
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
     "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.15",
     "tailwindcss": "^4.0.9"
   },
