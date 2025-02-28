@@ -20,7 +20,7 @@ const Up_top = () => {
 
   return (
     <motion.button
-      className="fixed bottom-20 right-12 bg-[#313c46] border border-[#fff] text-white p-3 rounded shadow-lg hover:bg-[#f04706] transition duration-300"
+      className="fixed bottom-20 right-12 bg-[#313c46] border border-[#fff] text-white p-3 rounded shadow-lg hover:bg-[#f04706] transition duration-300 z-100"
       onClick={scrollToTop}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}

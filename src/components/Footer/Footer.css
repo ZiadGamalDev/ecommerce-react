@@ -1,0 +1,16 @@
+.tags a {
+  transition: all ease-in-out 0.2s;
+  color: #fff;
+}
+
+.tags:hover a {
+  color: #f04708;
+}
+
+.rotate {
+  transition: all ease-in-out 0.3s;
+}
+
+.headphone:hover .rotate {
+  transform: rotateY(180deg);
+}

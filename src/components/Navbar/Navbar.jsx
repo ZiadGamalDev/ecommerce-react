@@ -227,16 +227,16 @@ const Navbar = () => {
                           <p className="mb-2 border-b pb-1 text-md font-bold text-gray-600">
                             {category.title}
                           </p>
-                          <ul className="flex flex-col gap-3">
+                          <span className="flex flex-col gap-3">
                             {category.items.map((item, idx) => (
-                              <li
+                              <span
                                 key={idx}
                                 className="hover:text-yellow-600 cursor-pointer transition-all duration-300 ease-in-out text-gray-500 text-sm"
                               >
                                 {item}
-                              </li>
+                              </span>
                             ))}
-                          </ul>
+                          </span>
                         </div>
                       ))}
                     </div>
