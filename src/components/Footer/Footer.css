@@ -14,3 +14,28 @@
 .headphone:hover .rotate {
   transform: rotateY(180deg);
 }
+
+@media (max-width: 480px) {
+  .smText {font-size: 15px;}
+  .smText2 {font-size: 12px;}
+  .smText2follow {font-size: 12px; width: 70%;}
+  .searchInput {
+    flex-direction: column;
+    gap: 5px;
+    width: 60%;
+  }
+
+  .searchInput input {
+    width: 100%;
+  }
+
+  .searchInput input::placeholder {
+    font-size: 12px;
+  }
+
+  .searchInput button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+}

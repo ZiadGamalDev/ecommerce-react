@@ -11,42 +11,42 @@ import payment from "../../assets/images/payment.png";
 const Footer = () => {
   return (
     <React.Fragment>
-      <footer className="bg-[#313c46] text-white relative">
-        <div className="mx-auto">
+      <footer className="bg-[#313c46] text-white relative overflow-hidden">
+        <div className=" flex flex-col">
           {/* Main Footer Content */}
           <div className="bg-[#2d3741] py-12">
-            <div className="container flex justify-between">
+            <div className="container flex justify-between flex-wrap gap-4">
               {/* Newsletter Section */}
               <div className="border-r border-gray-600 pr-70">
                 <div className="flex items-center gap-2 mb-4">
                   <Mail size={20} />
-                  <span className="text-2xl font-semibold">
+                  <span className="text-2xl font-semibold smText">
                     Sign up to our Newsletter
                   </span>
                 </div>
-                <p className="mb-4 text-gray-300 w-90">
+                <p className="mb-4 text-gray-300 w-90 smText2">
                   Give your inbox some love with new products, tips, & more.
                 </p>
-                <div className="border-0 p-2 bg-white">
+                <div className="border-0 bg-light flex flex-col items-center gap-2 md:gap-0 searchInput w-full p-2">
                   <input
                     type="text"
-                    placeholder="Enter Ur Email address..."
-                    className="outline-none text-gray-800 rounded-3xl"
+                    placeholder="Enter Your Email address..."
+                    className="outline-none text-gray-100 rounded py-2 ps-2 w-full md:flex-1 bg-orange-600"
                   />
-                  <button className="search bg-[#ffcc00] text-gray-950 font-semibold py-2 px-4 rounded ms-5">
+                  <button className="search bg-[#ffcc00] text-gray-950 font-semibold py-2 px-5 rounded w-full md:w-auto">
                     <span>Subscribe</span>
                   </button>
                 </div>
               </div>
 
               {/* Follow Us Section */}
-              <div className="md:pl-8">
-                <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
-                <p className="mb-4 text-gray-300 w-90">
+              <div className="">
+                <h3 className="text-xl font-semibold mb-4 smText">Follow Us</h3>
+                <p className="mb-4 text-gray-300 w-90 smText2follow">
                   We make consolidating, marketing and tracking your social
                   media website easy.
                 </p>
-                <div className="flex gap-3">
+                <div className="flex gap-3 flex-wrap">
                   <a
                     href="#"
                     className="bg-[#3b5998] transition-transform duration-300 hover:-translate-y-1 p-2 rounded"
@@ -92,7 +92,10 @@ const Footer = () => {
                 </span>
                 <div className="flex flex-col gap-3 mt-3">
                   <div className="flex gap-3 items-center cursor-pointer headphone">
-                    <Headphones className="text-orange-500 mt-1 rotate" size={40} />
+                    <Headphones
+                      className="text-orange-500 mt-1 rotate"
+                      size={40}
+                    />
                     <div className="flex flex-col">
                       <span>Call On Order? Call us 24/7</span>
                       <span className="text-orange-500 font-bold">
@@ -195,7 +198,7 @@ const Footer = () => {
 
             {/* Security Logos */}
             <div className="flex justify-center mt-12 mb-8">
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <img
                   src={img1}
                   alt="F-Secure"
@@ -216,7 +219,7 @@ const Footer = () => {
           </div>
 
           {/* Copyright and Payment Methods */}
-          <div className="container flex md:flex-row justify-between items-center border-t border-gray-600 py-6">
+          <div className="container flex md:flex-row justify-between items-center flex-wrap border-t border-gray-600 py-6">
             <span className="text-gray-400 text-sm">
               Copyright 2025, All Rights Reserved.
             </span>

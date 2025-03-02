@@ -1,0 +1,44 @@
+@media (max-width: 640px) {
+  .second,
+  .third {
+    display: none;
+  }
+
+  .first {
+    width: 100%;
+  }
+
+  .main {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .third {
+    display: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(10%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 50px; /* المسافة بين العناصر */
+  min-width: 200%;
+  animation: marquee 50s linear infinite;
+}
