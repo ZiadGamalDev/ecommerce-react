@@ -3,12 +3,15 @@ import routes from "./routes/routes";
 import "./App.css";
 import React from "react";
 import Up_top from "./components/Up-to-top/Up-to-top";
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   return (
     <React.Fragment>
       <Up_top />
-      <RouterProvider router={routes} />
+      <AuthProvider>
+        <RouterProvider router={routes} />
+      </AuthProvider>
     </React.Fragment>
   );
 }

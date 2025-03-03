@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Drawer,
   IconButton,
@@ -17,8 +17,10 @@ import logo from "../../assets/images/logo.png";
 // import styles from "./Navbar.module.css"
 import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
+  const { token, logout } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -118,12 +120,39 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>Login</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>Register</Typography>
-                </MenuItem>
+                {token
+                  ? [
+                      <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                        <Typography
+                          sx={{ textAlign: "center", cursor: "pointer" }}
+                          onClick={logout}
+                        >
+                          Logout
+                        </Typography>
+                      </MenuItem>,
+                    ]
+                  : [
+                      <MenuItem key="login" onClick={handleCloseUserMenu}>
+                        <Link
+                          to="/login"
+                          className="text-decoration-none text-black"
+                        >
+                          <Typography sx={{ textAlign: "center" }}>
+                            Login
+                          </Typography>
+                        </Link>
+                      </MenuItem>,
+                      <MenuItem key="register" onClick={handleCloseUserMenu}>
+                        <Link
+                          to="/register"
+                          className="text-decoration-none text-black"
+                        >
+                          <Typography sx={{ textAlign: "center" }}>
+                            Register
+                          </Typography>
+                        </Link>
+                      </MenuItem>,
+                    ]}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>WishList</Typography>
                 </MenuItem>
@@ -275,7 +304,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          
+
           <List className="flex flex-column mt-3">
             {[
               { name: "Home", path: "/" },
