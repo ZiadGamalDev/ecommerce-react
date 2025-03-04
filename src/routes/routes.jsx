@@ -6,6 +6,7 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 import Cart from "../pages/Cart/Cart.jsx";
+import WishList from "../pages/WishList/WishList.jsx";
 // import About from "../pages/About/About.jsx";
 // import Contact from "../pages/Contact/Contact.jsx";
 
@@ -47,6 +48,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Cart />
+          </Suspense>
+        ),
+      },
+      {
+        path: "wishlist",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <WishList />
           </Suspense>
         ),
       },
