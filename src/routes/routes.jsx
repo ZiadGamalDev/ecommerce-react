@@ -7,12 +7,14 @@ import NotFound from "../components/NotFound/NotFound.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 import Cart from "../pages/Cart/Cart.jsx";
 import WishList from "../pages/WishList/WishList.jsx";
-// import About from "../pages/About/About.jsx";
-// import Contact from "../pages/Contact/Contact.jsx";
+import AuthRoute from "./AuthRoute.jsx";
+import GuestRoute from "./GuestRoute.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
-const About = lazy((() => import("../pages/About/About.jsx")));
-const Contact = lazy((() => import("../pages/Contact/Contact.jsx")));
+const About = lazy(() => import("../pages/About/About.jsx"));
+const Contact = lazy(() => import("../pages/Contact/Contact.jsx"));
+const Register = lazy(() => import("../pages/Auth/Register.jsx"));
+const Login = lazy(() => import("../pages/Auth/Login.jsx"));
 
 const routes = createBrowserRouter([
   {
@@ -22,41 +24,71 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<Loader />}>
-            <Home />
-          </Suspense>
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Home />
+            </Suspense>
+          </AuthRoute>
         ),
       },
       {
         path: "about",
         element: (
-          <Suspense fallback={<Loader />}>
-            <About />
-          </Suspense>
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <About />
+            </Suspense>
+          </AuthRoute>
         ),
       },
       {
         path: "contact",
         element: (
-          <Suspense fallback={<Loader />}>
-            <Contact />
-          </Suspense>
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Contact />
+            </Suspense>
+          </AuthRoute>
         ),
       },
       {
         path: "cart",
         element: (
-          <Suspense fallback={<Loader />}>
-            <Cart />
-          </Suspense>
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Cart />
+            </Suspense>
+          </AuthRoute>
+        ),
+      },
+      {
+        path: "register",
+        element: (
+          <GuestRoute>
+            <Suspense fallback={<Loader />}>
+              <Register />
+            </Suspense>
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <GuestRoute>
+            <Suspense fallback={<Loader />}>
+              <Login />
+            </Suspense>
+          </GuestRoute>
         ),
       },
       {
         path: "wishlist",
         element: (
-          <Suspense fallback={<Loader />}>
-            <WishList />
-          </Suspense>
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <WishList />
+            </Suspense>
+          </AuthRoute>
         ),
       },
       { path: "*", element: <NotFound /> },
