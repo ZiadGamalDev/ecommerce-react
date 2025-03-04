@@ -6,6 +6,7 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 import Cart from "../pages/Cart/Cart.jsx";
+import WishList from "../pages/WishList/WishList.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
 
@@ -78,6 +79,16 @@ const routes = createBrowserRouter([
               <Login />
             </Suspense>
           </GuestRoute>
+        ),
+      },
+      {
+        path: "wishlist",
+        element: (
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <WishList />
+            </Suspense>
+          </AuthRoute>
         ),
       },
       { path: "*", element: <NotFound /> },

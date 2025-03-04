@@ -1,0 +1,161 @@
+* {
+  font-family: "Rubik", sans-serif;
+}
+
+.empty {
+  position: relative;
+  overflow: hidden;
+}
+
+.empty:hover {
+  animation: vibrate 0.3s linear 3;
+}
+
+.empty::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0%;
+  height: 100%;
+  background: #e80000;
+  transition: all 0.4s ease-in-out;
+}
+
+.empty:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+.empty span {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes vibrate {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-5deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.proceed {
+  position: relative;
+  overflow: hidden;
+}
+
+.proceed::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0%;
+  height: 100%;
+  background: #2d3741;
+  transition: all 0.4s ease-in-out;
+}
+
+.proceed:hover::after {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+.proceed span {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .cartContent {
+    flex-direction: column;
+  }
+
+  .cartContent > div {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  table thead {
+    display: none;
+  }
+
+  table tbody tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+
+  table tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  table tbody tr td:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cartContent .child {
+    width: 100%;
+  }
+
+  .cartContent .child {
+    width: 100%;
+  }
+
+  .cartBtns span {
+    font-size: 15px;
+  }
+
+  .cartBtns button {
+    padding: 8px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartContent {
+    padding: 10px;
+  }
+
+  .proceed, .search, .empty {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .cartContent input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .cartContent .flex {
+    flex-direction: column;
+  }
+
+  .cartContent .flex button {
+    width: 100%;
+  }
+
+  .couponDiv {
+    flex-direction: column;
+  }
+}
