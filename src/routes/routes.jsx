@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import Cart from "../pages/Cart/Cart.jsx";
+import WishList from "../pages/WishList/WishList.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
 import Loader from "../layouts/Loader.jsx";
@@ -83,6 +84,16 @@ const routes = createBrowserRouter([
       },
       {
         path: "profile",
+        element: (
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Profile />
+            </Suspense>
+          </AuthRoute>
+        ),
+      },
+      {
+        path: "wishlist",
         element: (
           <AuthRoute>
             <Suspense fallback={<Loader />}>

@@ -7,6 +7,7 @@ import "./Home.css";
 import banner1 from "../../assets/images/banners/banner-01.jpg";
 import banner2 from "../../assets/images/banners/banner-02.jpg";
 import banner3 from "../../assets/images/banners/banner-03.jpg";
+import Categories from "../../components/HomeComponents/Categoies/Categoies";
 
 const Home = () => {
   const products = [
@@ -43,7 +44,7 @@ const Home = () => {
         <FeaturesSection />
       </div>
 
-      <div className="py-12">
+      <div className="pb-12">
         <div className="flex justify-between main">
           <div className="flex-1 max-w-md first">
             <ProductCard {...products[0]} />
@@ -112,6 +113,8 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      <Categories />
     </React.Fragment>
   );
 };

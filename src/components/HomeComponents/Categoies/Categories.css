@@ -1,0 +1,15 @@
+.catTitle {
+    transition: all ease-in-out .3s;
+}
+
+.categoryCart:hover .catTitle {
+    color: #f04706;
+}
+
+.categoryCart img {
+    transition: all ease-in-out .2s;
+}
+
+.categoryCart:hover img {
+    background-color: #f04706;
+}

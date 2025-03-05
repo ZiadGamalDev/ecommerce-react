@@ -12,12 +12,10 @@ const ProductCard = ({ label, category, productName, price, image }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Label */}
       <div className="absolute top-4 left-4 bg-yellow-400 px-3 py-1 rounded-md text-black font-bold text-sm z-10">
         {label}
       </div>
 
-      {/* Product Info */}
       <div className="absolute left-0 top-0 w-1/2 h-full p-4 flex flex-col justify-end z-10">
         <div className="text-white">
           <p className="text-sm opacity-90">{category}</p>
@@ -31,7 +29,6 @@ const ProductCard = ({ label, category, productName, price, image }) => {
         </div>
       </div>
 
-      {/* Full size image with background */}
       <img
         src={image}
         alt={productName}
@@ -51,7 +48,7 @@ const ProductGallery = () => {
       category: "Smart Phones",
       productName: "Oneplus 8",
       price: "60.99",
-      image: banner1, // استبدل هذا برابط حقيقي للصورة
+      image: banner1, 
     },
     {
       id: 2,
@@ -59,7 +56,7 @@ const ProductGallery = () => {
       category: "Apple Watch",
       productName: "Series 4",
       price: "14.99",
-      image: banner2, // استبدل هذا برابط حقيقي للصورة
+      image: banner2, 
     },
     {
       id: 3,
@@ -67,7 +64,7 @@ const ProductGallery = () => {
       category: "Polaroid Now",
       productName: "Instant i-Type",
       price: "90.99",
-      image: banner3, // استبدل هذا برابط حقيقي للصورة
+      image: banner3, 
     },
   ];
 

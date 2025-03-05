@@ -74,7 +74,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-
+{/* 
           <div className="md:hidden lg:flex sm:hidden items-center gap-4 collection">
             <div className="bg-white flex gap-3 rounded-sm">
               <select className="p-2 select border-r-2">
@@ -92,7 +92,7 @@ const Navbar = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="md:hidden lg:flex sm:hidden items-center gap-4 concat">
             <div className="flex items-center gap-2">
@@ -164,7 +164,9 @@ const Navbar = () => {
                       </MenuItem>,
                     ]}
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>WishList</Typography>
+                  <Typography sx={{ textAlign: "center" }}>
+                    <Link className="text-decoration-none text-[#000]" to={"/wishlist"}>WishList</Link>
+                  </Typography>
                 </MenuItem>
               </Menu>
               <Tooltip title="Open Cart">
@@ -296,7 +298,7 @@ const Navbar = () => {
             display: { lg: "none" },
           }}
         >
-          <div className="flex items-center justify-center">
+          {/* <div className="flex items-center justify-center">
             <div className="bg-white flex gap-3 rounded-sm flex-column">
               <select className="p-2 select border-r-2 w-70 mt-3 mb-1">
                 <option>All Collection</option>
@@ -313,7 +315,8 @@ const Navbar = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
+          
 
           <List className="flex flex-column mt-3">
             {[
