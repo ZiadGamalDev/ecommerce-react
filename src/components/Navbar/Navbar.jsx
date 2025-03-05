@@ -122,6 +122,16 @@ const Navbar = () => {
               >
                 {token
                   ? [
+                      <MenuItem key="profile" onClick={handleCloseUserMenu}>
+                        <Link
+                          to="/profile"
+                          className="text-decoration-none text-black"
+                        >
+                          <Typography sx={{ textAlign: "center" }}>
+                            Profile
+                          </Typography>
+                        </Link>
+                      </MenuItem>,
                       <MenuItem key="logout" onClick={handleCloseUserMenu}>
                         <Typography
                           sx={{ textAlign: "center", cursor: "pointer" }}

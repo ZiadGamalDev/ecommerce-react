@@ -4,17 +4,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
-import Loader from "../components/Loader/Loader.jsx";
 import Cart from "../pages/Cart/Cart.jsx";
 import WishList from "../pages/WishList/WishList.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
+import Loader from "../layouts/Loader.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
 const About = lazy(() => import("../pages/About/About.jsx"));
 const Contact = lazy(() => import("../pages/Contact/Contact.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
 const Login = lazy(() => import("../pages/Auth/Login.jsx"));
+const Profile = lazy(() => import("../pages/Profile/Profile.jsx"));
 
 const routes = createBrowserRouter([
   {
@@ -82,11 +83,21 @@ const routes = createBrowserRouter([
         ),
       },
       {
+        path: "profile",
+        element: (
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Profile />
+            </Suspense>
+          </AuthRoute>
+        ),
+      },
+      {
         path: "wishlist",
         element: (
           <AuthRoute>
             <Suspense fallback={<Loader />}>
-              <WishList />
+              <Profile />
             </Suspense>
           </AuthRoute>
         ),
