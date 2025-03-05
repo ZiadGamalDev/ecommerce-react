@@ -2,7 +2,14 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { TextField, Button, Box, Typography, Alert, CircularProgress } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
 
 const baseUrl = "http://localhost:3000/";
@@ -20,7 +27,9 @@ export default function LoginForm() {
 
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(6, "Password too short").required("Password is required"),
+    password: Yup.string()
+      .min(6, "Password too short")
+      .required("Password is required"),
   });
 
   const onSubmit = async (values) => {
@@ -49,10 +58,20 @@ export default function LoginForm() {
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ p: 3, boxShadow: 2, borderRadius: 2, bgcolor: "white" }}>
-      <Typography variant="h5" textAlign="center" mb={2}>Login</Typography>
+    <Box
+      component="form"
+      onSubmit={formik.handleSubmit}
+      sx={{ p: 3, boxShadow: 2, borderRadius: 2, bgcolor: "white" }}
+    >
+      <Typography variant="h5" textAlign="center" mb={2}>
+        Login
+      </Typography>
 
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
 
       <TextField
         fullWidth
@@ -81,7 +100,14 @@ export default function LoginForm() {
         required
       />
 
-      <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }} disabled={loading}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{ mt: 2 }}
+        disabled={loading}
+      >
         {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
       </Button>
     </Box>

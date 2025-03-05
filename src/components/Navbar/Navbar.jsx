@@ -74,7 +74,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-{/* 
+          {/* 
           <div className="md:hidden lg:flex sm:hidden items-center gap-4 collection">
             <div className="bg-white flex gap-3 rounded-sm">
               <select className="p-2 select border-r-2">
@@ -165,7 +165,7 @@ const Navbar = () => {
                     ]}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>
-                    <Link className="text-decoration-none text-[#000]" to={"/wishlist"}>WishList</Link>
+                  <Link className="text-decoration-none text-[#000]" to={"/wishlist"}>WishList</Link>
                   </Typography>
                 </MenuItem>
               </Menu>
@@ -316,7 +316,7 @@ const Navbar = () => {
               </div>
             </div>
           </div> */}
-          
+
 
           <List className="flex flex-column mt-3">
             {[
@@ -417,12 +417,39 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography sx={{ textAlign: "center" }}>Login</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography sx={{ textAlign: "center" }}>Register</Typography>
-              </MenuItem>
+              {token
+                ? [
+                    <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                      <Typography
+                        sx={{ textAlign: "center", cursor: "pointer" }}
+                        onClick={logout}
+                      >
+                        Logout
+                      </Typography>
+                    </MenuItem>,
+                  ]
+                : [
+                    <MenuItem key="login" onClick={handleCloseUserMenu}>
+                      <Link
+                        to="/login"
+                        className="text-decoration-none text-black"
+                      >
+                        <Typography sx={{ textAlign: "center" }}>
+                          Login
+                        </Typography>
+                      </Link>
+                    </MenuItem>,
+                    <MenuItem key="register" onClick={handleCloseUserMenu}>
+                      <Link
+                        to="/register"
+                        className="text-decoration-none text-black"
+                      >
+                        <Typography sx={{ textAlign: "center" }}>
+                          Register
+                        </Typography>
+                      </Link>
+                    </MenuItem>,
+                  ]}
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography sx={{ textAlign: "center" }}>WishList</Typography>
               </MenuItem>
