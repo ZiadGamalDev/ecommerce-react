@@ -10,7 +10,7 @@ const NextArrow = (props) => {
   const { onClick } = props;
   return (
     <div
-      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2 cursor-pointer z-10 hover:bg-gray-300"
+      className="slick-arrow absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2 cursor-pointer z-10 hover:bg-gray-300"
       onClick={onClick}
     >
       <ChevronRight size={20} />
@@ -22,7 +22,7 @@ const PrevArrow = (props) => {
   const { onClick } = props;
   return (
     <div
-      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2 cursor-pointer z-10 hover:bg-gray-300"
+      className="slick-arrow absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2 cursor-pointer z-10 hover:bg-gray-300"
       onClick={onClick}
     >
       <ChevronLeft size={20} />

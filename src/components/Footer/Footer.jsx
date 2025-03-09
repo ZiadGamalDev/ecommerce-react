@@ -14,7 +14,7 @@ const Footer = () => {
       <footer className="bg-[#313c46] text-white relative overflow-hidden">
         <div className=" flex flex-col">
           {/* Main Footer Content */}
-          <div className="bg-[#2d3741] py-12">
+          <div className="bg-[#2d3741] py-6">
             <div className="container flex justify-between flex-wrap gap-4">
               {/* Newsletter Section */}
               <div className="border-r border-gray-600 pr-70">
@@ -84,7 +84,7 @@ const Footer = () => {
 
           {/* Middle Footer Content */}
           <div className="flex flex-col">
-            <div className="flex flex-wrap justify-between gap-8 text-gray-300 container py-12">
+            <div className="flex flex-wrap justify-between gap-8 text-gray-300 container py-6">
               {/* Contact Information */}
               <div className="w-full sm:w-auto flex-1">
                 <span className="text-xl font-semibold text-white">

@@ -1,15 +1,24 @@
 .catTitle {
-    transition: all ease-in-out .3s;
+  transition: all ease-in-out 0.3s;
 }
 
 .categoryCart:hover .catTitle {
-    color: #f04706;
+  color: #f04706;
 }
 
 .categoryCart img {
-    transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
 }
 
 .categoryCart:hover img {
-    background-color: #f04706;
+  background-color: #f04706;
+}
+
+.slick-arrow {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.slick-slider:hover .slick-arrow {
+  opacity: 1;
 }
