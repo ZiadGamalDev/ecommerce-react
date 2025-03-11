@@ -11,6 +11,8 @@ import banner4 from "../../assets/images/banners/banner-04.jpg";
 import banner5 from "../../assets/images/banners/banner-05.jpg";
 import Categories from "../../components/HomeComponents/Categoies/Categoies";
 import Deals from "../../components/HomeComponents/Deals/Deals";
+import LatestNews from "../../components/HomeComponents/LatestNews/LatestNews";
+import Client from './../../components/HomeComponents/Client/Client';
 
 const Home = () => {
   const products = [
@@ -148,6 +150,10 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      <LatestNews />
+
+      <Client />
     </React.Fragment>
   );
 };

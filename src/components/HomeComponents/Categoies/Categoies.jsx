@@ -111,7 +111,7 @@ const Categories = () => {
 
         <Slider ref={sliderRef} {...sliderSettings}>
           {categories.map((category) => (
-            <div key={category.id} style={{ padding: "0" }}> {/* إزالة الهوامش هنا */}
+            <div key={category.id} style={{ padding: "0" }}>
               <CategoryCard
                 title={category.name}
                 items={category.brands.length}
