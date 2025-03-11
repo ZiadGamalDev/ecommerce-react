@@ -52,7 +52,7 @@
 
 .marquee-content {
   display: flex;
-  gap: 50px; /* المسافة بين العناصر */
+  gap: 50px;
   min-width: 200%;
   animation: marquee 50s linear infinite;
 }

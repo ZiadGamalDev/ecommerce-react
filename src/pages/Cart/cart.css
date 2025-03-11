@@ -92,42 +92,21 @@
 }
 
 @media (max-width: 768px) {
-  table thead {
-    display: none;
-  }
-
-  table tbody tr {
-    display: flex;
+  .cartContent {
     flex-direction: column;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
   }
 
-  table tbody tr td {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-  }
-
-  table tbody tr td:first-child {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cartContent .child {
+  .child {
     width: 100%;
   }
 
-  .cartContent .child {
+  .cartBtns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .proceed {
     width: 100%;
-  }
-
-  .cartBtns span {
-    font-size: 15px;
-  }
-
-  .cartBtns button {
-    padding: 8px 4px;
   }
 }
 
@@ -158,4 +137,13 @@
   .couponDiv {
     flex-direction: column;
   }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  min-width: 700px;
 }
