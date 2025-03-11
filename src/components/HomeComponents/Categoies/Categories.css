@@ -13,12 +13,3 @@
 .categoryCart:hover img {
   background-color: #f04706;
 }
-
-.slick-arrow {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.slick-slider:hover .slick-arrow {
-  opacity: 1;
-}
