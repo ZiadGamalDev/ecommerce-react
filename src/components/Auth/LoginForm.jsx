@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
 
-const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
 export default function LoginForm() {
   const { saveUser } = useContext(AuthContext);
@@ -43,7 +43,7 @@ export default function LoginForm() {
       }).then((res) => res.json());
 
       if (response.success) {
-        saveUser({ token: response.data.token });
+        saveUser({ token: response.data.token, role: response.data.role });
         navigate("/");
       } else {
         setError(response.error_message || "Invalid login credentials!");

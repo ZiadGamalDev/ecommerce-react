@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button, Box, Typography, Alert, CircularProgress } from "@mui/material";
 
-const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
 export default function RegisterForm() {
   const [error, setError] = useState("");

@@ -46,7 +46,7 @@ const transformCategoryData = (category) => {
 
 const fetchProducts = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/product');
+    const response = await axios.get('https://e-commerce-api-tau-five.vercel.app/product');
     const productsArray = response.data.data;
 
     const transformedProducts = productsArray.map(transformProductData);
@@ -59,7 +59,7 @@ const fetchProducts = async () => {
 
 const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/category');
+    const response = await axios.get('https://e-commerce-api-tau-five.vercel.app/category');
     const categoriesArray = response.data.data;
 
     const transformedCategories = categoriesArray.map(transformCategoryData);

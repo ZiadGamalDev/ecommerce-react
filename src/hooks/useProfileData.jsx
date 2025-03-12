@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
 const useProfileData = () => {
   const { token } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const useProfileData = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`${baseUrl}profile`, {
+        const response = await axios.get(`${baseUrl}profile/`, {
           headers: { accesstoken: `accesstoken_${token}` },
         });
         setProfile(response.data.user);
