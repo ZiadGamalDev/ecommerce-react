@@ -20,7 +20,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const { token, logout } = useContext(AuthContext);
+  const { token, logout, role } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -74,25 +74,6 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          {/* 
-          <div className="md:hidden lg:flex sm:hidden items-center gap-4 collection">
-            <div className="bg-white flex gap-3 rounded-sm">
-              <select className="p-2 select border-r-2">
-                <option>All Collection</option>
-              </select>
-              <div className="flex border-0 p-2">
-                <input
-                  type="text"
-                  placeholder="Search for product..."
-                  className="outline-none"
-                />
-                <button className="search flex justify-center items-center gap-2 bg-gray-900 py-2 px-4 text-white rounded">
-                  <i className="bi bi-search"></i>
-                  <span>Search</span>
-                </button>
-              </div>
-            </div>
-          </div> */}
 
           <div className="md:hidden lg:flex sm:hidden items-center gap-4 concat">
             <div className="flex items-center gap-2">
@@ -122,13 +103,16 @@ const Navbar = () => {
               >
                 {token
                   ? [
-                      <MenuItem key="profile" onClick={handleCloseUserMenu}>
+                      <MenuItem
+                        key="profileOrDashboard"
+                        onClick={handleCloseUserMenu}
+                      >
                         <Link
-                          to="/profile"
+                          to={role === "admin" ? "/dashboard" : "/profile"}
                           className="text-decoration-none text-black"
                         >
                           <Typography sx={{ textAlign: "center" }}>
-                            Profile
+                            {role === "admin" ? "Dashboard" : "Profile"}
                           </Typography>
                         </Link>
                       </MenuItem>,
@@ -165,7 +149,12 @@ const Navbar = () => {
                     ]}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>
-                  <Link className="text-decoration-none text-[#000]" to={"/wishlist"}>WishList</Link>
+                    <Link
+                      className="text-decoration-none text-[#000]"
+                      to={"/wishlist"}
+                    >
+                      WishList
+                    </Link>
                   </Typography>
                 </MenuItem>
               </Menu>
@@ -298,25 +287,6 @@ const Navbar = () => {
             display: { lg: "none" },
           }}
         >
-          {/* <div className="flex items-center justify-center">
-            <div className="bg-white flex gap-3 rounded-sm flex-column">
-              <select className="p-2 select border-r-2 w-70 mt-3 mb-1">
-                <option>All Collection</option>
-              </select>
-              <div className="flex border-0 p-2 bg-[#ffcc00] rounded-sm sm:w-65">
-                <input
-                  type="text"
-                  placeholder="Search for product..."
-                  className="outline-none"
-                />
-                <button className="search flex justify-center items-center gap-2 bg-gray-900 md:py-2 md:px-4 sm:px-3 text-white rounded">
-                  <i className="bi bi-search sm:text-xs"></i>
-                  <span className="text-xs">Search</span>
-                </button>
-              </div>
-            </div>
-          </div> */}
-
 
           <List className="flex flex-column mt-3">
             {[

@@ -11,7 +11,7 @@ export default function Loader() {
         height: "100vh",
       }}
     >
-      <BeatLoader color="#74da91" cssOverride={{}} size={10} />
+      <BeatLoader color="#f04706" cssOverride={{}} size={10} />
     </div>
   );
 }

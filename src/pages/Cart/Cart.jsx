@@ -127,9 +127,6 @@ const Cart = () => {
               <button className="px-4 py-2 bg-gray-700 text-white rounded search">
                 <span>Apply coupon</span>
               </button>
-              <button className="px-4 py-2 bg-gray-700 text-white rounded empty">
-                <span>Empty Cart</span>
-              </button>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ const useCartData = () => {
   const [error, setError] = useState(null);
 
   const headers = { accesstoken: `accesstoken_${token}` };
-  const baseUrl = "http://localhost:3000/";
+  const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
   // Fetch cart data
   const getCart = useCallback(async () => {
