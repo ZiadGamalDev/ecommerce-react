@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 import "./details.css";
 import { Alert } from "@mui/material";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -102,6 +103,7 @@ const ProductDetails = () => {
 
   return (
     <React.Fragment>
+      <ChatIcon />
       <div className="p-4">
         {reviewsData.loading && <Loader />}
         {reviewsData.error && (

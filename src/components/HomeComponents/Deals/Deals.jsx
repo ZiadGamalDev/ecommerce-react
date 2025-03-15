@@ -104,7 +104,7 @@ const Deals = () => {
 
   return (
     <React.Fragment>
-      <div className="mx-auto pt-6 pb-12">
+      <div className="pt-6 pb-12">
         <div className="flex main-product">
           <div className="w-full px-2 order-2 right-products">
             <div className="relative">
@@ -132,7 +132,7 @@ const Deals = () => {
 
               <Slider ref={featuredSliderRef} {...featuredSliderSettings}>
                 {products.map((product) => (
-                  <div key={product.id} className="px-2">
+                  <div key={product.id}>
                     <div className="card">
                       <div className="relative">
                         <img

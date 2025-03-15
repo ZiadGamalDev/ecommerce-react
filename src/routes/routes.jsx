@@ -6,17 +6,18 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
+import Chat from "../pages/Chat/Chat.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
-const About = lazy(() => import("../pages/About/About.jsx"));
-const Contact = lazy(() => import("../pages/Contact/Contact.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
 const Login = lazy(() => import("../pages/Auth/Login.jsx"));
 const Profile = lazy(() => import("../pages/Profile/Profile.jsx"));
 const Cart = lazy(() => import("../pages/Cart/Cart.jsx"));
 const WishList = lazy(() => import("../pages/WishList/WishList.jsx"));
 const Loader = lazy(() => import("../layouts/Loader.jsx"));
-const ProductDetails = lazy(() => import("../pages/ProductDetails/ProductDetails.jsx"));
+const ProductDetails = lazy(() =>
+  import("../pages/ProductDetails/ProductDetails.jsx")
+);
 
 const routes = createBrowserRouter([
   {
@@ -29,26 +30,6 @@ const routes = createBrowserRouter([
           <Suspense fallback={<Loader />}>
             <Home />
           </Suspense>
-        ),
-      },
-      {
-        path: "about",
-        element: (
-          <AuthRoute>
-            <Suspense fallback={<Loader />}>
-              <About />
-            </Suspense>
-          </AuthRoute>
-        ),
-      },
-      {
-        path: "contact",
-        element: (
-          <AuthRoute>
-            <Suspense fallback={<Loader />}>
-              <Contact />
-            </Suspense>
-          </AuthRoute>
         ),
       },
       {
@@ -107,6 +88,16 @@ const routes = createBrowserRouter([
           <AuthRoute>
             <Suspense fallback={<Loader />}>
               <ProductDetails />
+            </Suspense>
+          </AuthRoute>
+        ),
+      },
+      {
+        path: "customerSupport",
+        element: (
+          <AuthRoute>
+            <Suspense fallback={<Loader />}>
+              <Chat />
             </Suspense>
           </AuthRoute>
         ),

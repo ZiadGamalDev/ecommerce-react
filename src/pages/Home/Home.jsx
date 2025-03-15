@@ -12,7 +12,8 @@ import banner5 from "../../assets/images/banners/banner-05.jpg";
 import Categories from "../../components/HomeComponents/Categoies/Categoies";
 import Deals from "../../components/HomeComponents/Deals/Deals";
 import LatestNews from "../../components/HomeComponents/LatestNews/LatestNews";
-import Client from './../../components/HomeComponents/Client/Client';
+import Client from "./../../components/HomeComponents/Client/Client";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const Home = () => {
   const products = [
@@ -60,6 +61,8 @@ const Home = () => {
 
   return (
     <React.Fragment>
+      <ChatIcon />
+
       <Slider />
       <div className="my-5 mx-auto">
         <FeaturesSection />

@@ -3,6 +3,7 @@ import { ChevronRight, House, Minus, Plus, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import useCartData from "../../hooks/useCartData";
 import "./cart.css";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const Cart = () => {
   const { cart, getCart, addToCart, deleteFromCart } = useCartData();
@@ -17,6 +18,8 @@ const Cart = () => {
 
   return (
     <div className="w-full mx-auto pb-4">
+      <ChatIcon />
+
       {/* Header */}
       <div className="bg-[#f5f5f9] py-3 px-6 mb-6">
         <div className="container flex justify-between items-center">
