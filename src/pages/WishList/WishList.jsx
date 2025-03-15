@@ -5,6 +5,7 @@ import useWishList from "../../hooks/useWishListData";
 import "../Cart/cart.css";
 import Loader from "../../layouts/Loader";
 import useCartData from "../../hooks/useCartData";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const WishList = () => {
   const { wishlist, isLoading, removeFromWishlist } = useWishList();
@@ -18,6 +19,7 @@ const WishList = () => {
 
   return (
     <React.Fragment>
+      <ChatIcon />
       <div className="w-full mx-auto pb-4">
         {/* Header */}
         <div className="bg-[#f5f5f9] py-3 px-6 mb-6">

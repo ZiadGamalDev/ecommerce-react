@@ -1,10 +1,13 @@
 import React from "react";
 import { ChevronRight, House } from "lucide-react";
 import { Link } from "react-router-dom";
+import ChatIcon from "../ChatIcon/ChatIcon";
 
 const NotFound = () => {
   return (
     <div className="w-full mx-auto pb-4 flex flex-col">
+      <ChatIcon />
+
       <div className="bg-[#f5f5f9] py-3 px-6 mb-6">
         <div className="container flex justify-between items-center">
           <span className="text-xl text-gray-700 font-bold">
