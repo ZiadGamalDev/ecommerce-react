@@ -1,0 +1,28 @@
+/* Chrome/Edge/Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: #ccc;
+    border-radius: 9999px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 14px;
+    width: 14px;
+    background: #000;
+    border-radius: 50%;
+    margin-top: -6px;
+    cursor: pointer;
+}
+/* Firefox */
+input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: #ccc;
+    border-radius: 9999px;
+}
+input[type="range"]::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    background: #000;
+    border-radius: 50%;
+    cursor: pointer;
+}
