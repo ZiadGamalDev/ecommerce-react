@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
+  CircularProgress,
   Drawer,
   IconButton,
   List,
@@ -19,13 +20,34 @@ import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
+import { fetchCategories } from "../../hooks/useProductData";
+
 const Navbar = () => {
   const { token, logout, role } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const location = useLocation();
+
+  useEffect(() => {
+    const getCategories = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getCategories();
+  }, []);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -214,61 +236,35 @@ const Navbar = () => {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
-                    <div className="max-w-screen-xl mx-auto flex justify-between">
-                      {[
-                        {
-                          title: "Cameras",
-                          items: [
-                            "Depth Sensor",
-                            "Macro Lens",
-                            "Night Mode",
-                            "Primary Camera",
-                          ],
-                        },
-                        {
-                          title: "Computer & Laptop",
-                          items: [
-                            "Business Laptops",
-                            "Chromebooks",
-                            "Gaming Laptops",
-                            "Mini PCs",
-                          ],
-                        },
-                        {
-                          title: "Mobile & Tablets",
-                          items: [
-                            "Gaming Tablets",
-                            "Kids' Tablets",
-                            "Phablets",
-                            "Rugged Phones",
-                          ],
-                        },
-                        {
-                          title: "Home Speaker",
-                          items: [
-                            "Mini PCs",
-                            "Gaming",
-                            "Headphones",
-                            "Kids Toys",
-                          ],
-                        },
-                      ].map((category, index) => (
-                        <div key={index} className="flex flex-col gap-2">
-                          <p className="mb-2 border-b pb-1 text-md font-bold text-gray-600">
-                            {category.title}
-                          </p>
-                          <span className="flex flex-col gap-3">
-                            {category.items.map((item, idx) => (
-                              <span
-                                key={idx}
-                                className="hover:text-yellow-600 cursor-pointer transition-all duration-300 ease-in-out text-gray-500 text-sm"
-                              >
-                                {item}
-                              </span>
-                            ))}
-                          </span>
+                    <div className="mx-auto flex justify-between overflow-auto max-w-screen-lg">
+                      {loading ? (
+                        <div className="flex justify-center items-center h-full">
+                          <CircularProgress />
                         </div>
-                      ))}
+                      ) : (
+                        <div className="mx-auto flex justify-between overflow-auto max-w-screen-lg">
+                          {categories.map((category, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col gap-2 min-w-[200px]"
+                            >
+                              <p className="mb-2 border-b pb-1 text-md font-bold text-gray-600">
+                                {category.name}
+                              </p>
+                              <span className="flex flex-col gap-3">
+                                {category.brands.map((brand, idx) => (
+                                  <span
+                                    key={idx}
+                                    className="hover:text-yellow-600 cursor-pointer transition-all duration-300 ease-in-out text-gray-500 text-sm"
+                                  >
+                                    {brand.name}
+                                  </span>
+                                ))}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -287,7 +283,6 @@ const Navbar = () => {
             display: { lg: "none" },
           }}
         >
-
           <List className="flex flex-column mt-3">
             {[
               { name: "Home", path: "/" },
@@ -308,52 +303,30 @@ const Navbar = () => {
                       />
                     </ListItem>
                     {isCategoriesOpen && (
-                      <div className="bg-gray-100 p-3 shadow-md">
-                        {[
-                          {
-                            title: "Cameras",
-                            items: [
-                              "Depth Sensor",
-                              "Macro Lens",
-                              "Night Mode",
-                              "Primary Camera",
-                            ],
-                          },
-                          {
-                            title: "Laptops",
-                            items: [
-                              "Business Laptops",
-                              "Chromebooks",
-                              "Gaming Laptops",
-                              "Mini PCs",
-                            ],
-                          },
-                          {
-                            title: "Mobiles",
-                            items: [
-                              "Gaming Tablets",
-                              "Kids' Tablets",
-                              "Phablets",
-                              "Rugged Phones",
-                            ],
-                          },
-                        ].map((category, index) => (
-                          <div key={index} className="mt-2">
-                            <p className="font-bold text-gray-600">
-                              {category.title}
-                            </p>
-                            <ul>
-                              {category.items.map((item, idx) => (
-                                <li
-                                  key={idx}
-                                  className="text-gray-500 text-sm hover:text-yellow-600 cursor-pointer transition-all duration-300"
-                                >
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
+                      <div className="bg-gray-100 p-3 shadow-md h-[300px] overflow-auto">
+                        {loading ? (
+                          <div className="flex justify-center items-center h-full">
+                            <CircularProgress />
                           </div>
-                        ))}
+                        ) : (
+                          categories.map((category, index) => (
+                            <div key={index} className="mt-2">
+                              <u className="font-bold text-gray-600">
+                                {category.name}
+                              </u>
+                              <ul>
+                                {category.brands.map((brand, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="text-gray-500 text-sm hover:text-yellow-600 cursor-pointer transition-all duration-300"
+                                  >
+                                    {brand.name}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))
+                        )}
                       </div>
                     )}
                   </div>

@@ -6,7 +6,6 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
-import Chat from "../pages/Chat/Chat.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
@@ -92,16 +91,7 @@ const routes = createBrowserRouter([
           </AuthRoute>
         ),
       },
-      {
-        path: "customerSupport",
-        element: (
-          <AuthRoute>
-            <Suspense fallback={<Loader />}>
-              <Chat />
-            </Suspense>
-          </AuthRoute>
-        ),
-      },
+
       { path: "*", element: <NotFound /> },
     ],
   },
