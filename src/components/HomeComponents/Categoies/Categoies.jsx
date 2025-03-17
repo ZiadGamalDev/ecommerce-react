@@ -8,7 +8,7 @@ import Loader from "../../../layouts/Loader";
 const CategoryCard = ({ title, items, image }) => (
   <div
     className={`relative flex flex-row items-center border transition-all cursor-pointer duration-500 hover:shadow-md categoryCart`}
-    style={{ maxWidth: "450px", width: "100%", margin: "0" }} // إزالة الهوامش
+    style={{ maxWidth: "450px", width: "100%", margin: "0" }}
   >
     <div className="w-2/3 flex flex-col justify-center pl-4">
       <span className={`font-semibold text-lg text-gray-800 catTitle`}>
