@@ -14,7 +14,7 @@ const Footer = () => {
       <footer className="bg-[#313c46] text-white relative overflow-hidden">
         <div className=" flex flex-col">
           {/* Main Footer Content */}
-          <div className="bg-[#2d3741] py-12">
+          <div className="bg-[#2d3741] py-6">
             <div className="container flex justify-between flex-wrap gap-4">
               {/* Newsletter Section */}
               <div className="border-r border-gray-600 pr-70">
@@ -83,8 +83,8 @@ const Footer = () => {
           </div>
 
           {/* Middle Footer Content */}
-          <div className="flex flex-col">
-            <div className="flex flex-wrap justify-between gap-8 text-gray-300 container py-12">
+          <div className="flex flex-col border-b border-gray-600">
+            <div className="flex flex-wrap justify-between gap-8 text-gray-300 container py-6">
               {/* Contact Information */}
               <div className="w-full sm:w-auto flex-1">
                 <span className="text-xl font-semibold text-white">
@@ -197,7 +197,7 @@ const Footer = () => {
             </div>
 
             {/* Security Logos */}
-            <div className="flex justify-center mt-12 mb-8">
+            <div className="flex justify-center mt-2 mb-4">
               <div className="flex gap-2 flex-wrap">
                 <img
                   src={img1}
@@ -219,7 +219,7 @@ const Footer = () => {
           </div>
 
           {/* Copyright and Payment Methods */}
-          <div className="container flex md:flex-row justify-between items-center flex-wrap border-t border-gray-600 py-6">
+          <div className="container flex justify-between items-center flex-wrap py-2">
             <span className="text-gray-400 text-sm">
               Copyright 2025, All Rights Reserved.
             </span>

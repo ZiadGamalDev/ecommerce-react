@@ -5,7 +5,7 @@
   }
 
   .first {
-    width: 100%;
+    width: 100% !important;
   }
 
   .main {
@@ -15,8 +15,22 @@
 }
 
 @media (max-width: 900px) {
-  .third {
+  .third,
+  .second-part {
     display: none;
+  }
+
+  .main {
+    padding: 0px 20px;
+  }
+
+  .first,
+  .second {
+    width: 50%;
+  }
+
+  .first-part {
+    width: 100%;
   }
 }
 
@@ -38,7 +52,7 @@
 
 .marquee-content {
   display: flex;
-  gap: 50px; /* المسافة بين العناصر */
+  gap: 50px;
   min-width: 200%;
   animation: marquee 50s linear infinite;
 }

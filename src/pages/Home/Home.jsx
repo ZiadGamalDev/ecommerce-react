@@ -7,7 +7,13 @@ import "./Home.css";
 import banner1 from "../../assets/images/banners/banner-01.jpg";
 import banner2 from "../../assets/images/banners/banner-02.jpg";
 import banner3 from "../../assets/images/banners/banner-03.jpg";
+import banner4 from "../../assets/images/banners/banner-04.jpg";
+import banner5 from "../../assets/images/banners/banner-05.jpg";
 import Categories from "../../components/HomeComponents/Categoies/Categoies";
+import Deals from "../../components/HomeComponents/Deals/Deals";
+import LatestNews from "../../components/HomeComponents/LatestNews/LatestNews";
+import Client from "./../../components/HomeComponents/Client/Client";
+import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const Home = () => {
   const products = [
@@ -35,10 +41,28 @@ const Home = () => {
       price: "90.99",
       image: banner3,
     },
+    {
+      id: 4,
+      label: "POPULAR PRODUCT",
+      category: "Microsoft Surface",
+      productName: "Wireless Keyboard",
+      price: "37.85",
+      image: banner4,
+    },
+    {
+      id: 5,
+      label: "POPULAR PRODUCT",
+      category: "Bang & Olufsen",
+      productName: "Beoplay A1 Speaker",
+      price: "10.99",
+      image: banner5,
+    },
   ];
 
   return (
     <React.Fragment>
+      <ChatIcon />
+
       <Slider />
       <div className="my-5 mx-auto">
         <FeaturesSection />
@@ -46,15 +70,15 @@ const Home = () => {
 
       <div className="pb-12">
         <div className="flex justify-between main">
-          <div className="flex-1 max-w-md first">
+          <div className="w-1/3 pr-2 first">
             <ProductCard {...products[0]} />
           </div>
 
-          <div className="flex-1 max-w-md second">
+          <div className="w-1/3 px-2 second">
             <ProductCard {...products[1]} />
           </div>
 
-          <div className="flex-1 max-w-md third">
+          <div className="w-1/3 pl-2 third">
             <ProductCard {...products[2]} />
           </div>
         </div>
@@ -115,6 +139,24 @@ const Home = () => {
       </div>
 
       <Categories />
+
+      <Deals />
+
+      <div className="pb-12">
+        <div className="flex justify-between main gap-5">
+          <div className="first-part w-1/2">
+            <ProductCard {...products[3]} />
+          </div>
+
+          <div className="second-part w-1/2">
+            <ProductCard {...products[4]} />
+          </div>
+        </div>
+      </div>
+
+      <LatestNews />
+
+      <Client />
     </React.Fragment>
   );
 };
@@ -134,7 +176,7 @@ const ProductCard = ({ label, category, productName, price, image }) => {
       <div className="absolute left-0 top-0 w-1/2 h-full p-4 flex flex-col justify-end z-10">
         <div className="text-white">
           <p className="text-sm opacity-90">{category}</p>
-          <h3 className="text-xl font-bold mb-2">{productName}</h3>
+          <span className="text-xl font-bold mb-2">{productName}</span>
           <div className="flex items-center">
             <span className="text-xs text-white opacity-80">FROM</span>
             <span className="text-xl font-bold text-yellow-400 ml-2">

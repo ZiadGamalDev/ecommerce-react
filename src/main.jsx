@@ -4,8 +4,14 @@ import "./index.css";
 import App from "./App.jsx";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
+  <StrictMode>
+      <QueryClientProvider client={queryClient}>
         <App />
-    </StrictMode>
+      </QueryClientProvider>
+  </StrictMode>
 );

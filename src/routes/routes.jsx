@@ -4,20 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
-import Cart from "../pages/Cart/Cart.jsx";
-import WishList from "../pages/WishList/WishList.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
 import Loader from "../layouts/Loader.jsx";
 import Shop from "../pages/Shop/Shop.jsx";
 import SingleProduct from "../pages/SingleProduct/SingleProduct.jsx";
 
+
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
-const About = lazy(() => import("../pages/About/About.jsx"));
-const Contact = lazy(() => import("../pages/Contact/Contact.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
 const Login = lazy(() => import("../pages/Auth/Login.jsx"));
 const Profile = lazy(() => import("../pages/Profile/Profile.jsx"));
+const Cart = lazy(() => import("../pages/Cart/Cart.jsx"));
+const WishList = lazy(() => import("../pages/WishList/WishList.jsx"));
+const Loader = lazy(() => import("../layouts/Loader.jsx"));
+const ProductDetails = lazy(() =>
+  import("../pages/ProductDetails/ProductDetails.jsx")
+);
 
 const routes = createBrowserRouter([
     {
@@ -35,31 +38,13 @@ const routes = createBrowserRouter([
                 ),
             },
             {
-                path: "about",
-                element: (
-                    <AuthRoute>
-                        <Suspense fallback={<Loader />}>
-                            <About />
-                        </Suspense>
-                    </AuthRoute>
-                ),
-            },
-            {
-                path: "contact",
-                element: (
-                    <AuthRoute>
-                        <Suspense fallback={<Loader />}>
-                            <Contact />
-                        </Suspense>
-                    </AuthRoute>
-                ),
-            },
-            {
                 path: "product/:id",
                 element: (
+                  <AuthRoute>
                     <Suspense fallback={<Loader />}>
                         <SingleProduct />
                     </Suspense>
+                  </AuthRoute>
                 ),
             },
             {
@@ -107,7 +92,7 @@ const routes = createBrowserRouter([
                 element: (
                     <AuthRoute>
                         <Suspense fallback={<Loader />}>
-                            <Profile />
+                            <WishList />
                         </Suspense>
                     </AuthRoute>
                 ),
