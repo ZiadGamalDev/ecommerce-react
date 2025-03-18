@@ -28,7 +28,7 @@ export default function Sidebar({ loading, categories, brands, search, selectedC
                     <span className="font-semibold text-gray-700 text-sm">Search</span>
                 </div>
                 <div className="p-2 space-y-2">
-                    <input type="text" value={search} onChange={(e) => onSearchChange(e.target.value)} placeholder="Type to search..." className="w-full border border-gray-300 rounded p-1 text-sm" />
+                    <input type="text" value={search} onChange={(e) => onSearchChange(e.target.value)} placeholder="Type to search..." className="w-full border border-gray-300 rounded p-1 text-sm text-[15px] ps-2" />
                 </div>
             </div>
 
