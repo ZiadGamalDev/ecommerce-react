@@ -196,10 +196,8 @@ const Navbar = () => {
           <div className="container flex items-center gap-5">
             {[
               { name: "Home", path: "/" },
-              { name: "About", path: "/about" },
               { name: "Shop", path: "/shop" },
               { name: "Categories" },
-              { name: "Contact", path: "/contact" },
             ].map((link) => (
               <div
                 key={link.name}
@@ -286,10 +284,8 @@ const Navbar = () => {
           <List className="flex flex-column mt-3">
             {[
               { name: "Home", path: "/" },
-              { name: "About", path: "/about" },
               { name: "Shop", path: "/shop" },
               { name: "Categories" },
-              { name: "Contact", path: "/contact" },
             ].map((link) => (
               <div key={link.name}>
                 {link.name === "Categories" ? (

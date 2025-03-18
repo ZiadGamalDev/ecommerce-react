@@ -128,7 +128,7 @@ const WishList = () => {
                   Your wishlist is empty 🛒
                 </span>
                 <Link
-                  to="/"
+                  to="/shop"
                   className="text-[#f7f7f9] py-3 px-4 bg-[#2d3741] rounded transition duration-300 search mt-4"
                 >
                   <span>Browse products</span>
