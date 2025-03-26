@@ -27,11 +27,9 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: (
-          <AuthRoute>
-            <Suspense fallback={<Loader />}>
-              <Home />
-            </Suspense>
-          </AuthRoute>
+          <Suspense fallback={<Loader />}>
+            <Home />
+          </Suspense>
         ),
       },
       {
