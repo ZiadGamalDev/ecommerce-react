@@ -44,6 +44,8 @@ export default function LoginForm() {
 
       if (response.success) {
         saveUser({ token: response.data.token, role: response.data.role, userId: response.data.userId});
+        console.log('Token:', response.data.token);
+        
         navigate("/");
       } else {
         setError(response.error_message || "Invalid login credentials!");
