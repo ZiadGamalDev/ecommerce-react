@@ -9,20 +9,18 @@ const ChatIcon = () => {
   const handleChatClick = async () => {
     try {
       console.log('Token:', token);
-      const response = await fetch('http://localhost:3000/chats', {
+      const response = await fetch('https://customer-support-rose.vercel.app/chats', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({})
       });
       
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('chatID', data.id);
-        
-        const chatUrl = `https://client-chat-service.netlify.app?token=${token}`;
+
+        const chatUrl = `https://client-chat-service.netlify.app/?chatId=${data.id}&token=${token}`;
         window.location.href = chatUrl;
       } else {
         const errorData = await response.json();
