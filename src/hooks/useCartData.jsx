@@ -52,6 +52,7 @@ const useCartData = () => {
       getCart();
     } catch (err) {
       setError(err.response?.data?.message || err.message);
+      console.log(err.response?.data?.message || err.message);
     } finally {
       setLoading(false);
     }

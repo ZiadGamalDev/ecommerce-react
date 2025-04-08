@@ -1,6 +1,8 @@
 import { ChevronRight, House } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { Hourglass } from "ldrs/react";
+import "ldrs/react/Hourglass.css";
 
 const NotAgentAvailable = () => {
   return (
@@ -22,7 +24,12 @@ const NotAgentAvailable = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center my-3 py-12">
-          <h1 className="text-7xl font-bold text-[#f04706] mb-4">No Agent!</h1>
+          <div className="flex gap-3 ">
+            <h1 className="text-7xl font-bold text-[#f04706] mb-4">
+              No Agent!
+            </h1>
+            <Hourglass size="40" bgOpacity="0.1" speed="1.75" color="#f04706" />
+          </div>
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Oops! No Support Agent is Available.
           </h2>
