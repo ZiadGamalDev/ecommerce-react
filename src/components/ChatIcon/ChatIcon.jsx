@@ -38,10 +38,7 @@ const ChatIcon = () => {
       } else {
         const errorData = await response.json();
         if (errorData.message === "No agents available") {
-          console.log(
-            "No agents available, navigating to NoAgentAvailable page."
-          );
-          navigate(NoAgentAvailable); // توجيه المستخدم إلى صفحة NoAgentAvailable
+          navigate(NoAgentAvailable);
         } else {
           console.error("Failed to initiate chat:", errorData);
         }
