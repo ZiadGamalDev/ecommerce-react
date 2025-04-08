@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
+import { Bell } from "lucide-react";
 
 import logo from "../../assets/images/logo.png";
 
@@ -21,10 +22,12 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 import { fetchCategories } from "../../hooks/useProductData";
+import Notifications from './../Notifications/Notifications';
 
 const Navbar = () => {
   const { token, logout, role } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [notification, setNotification] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
@@ -78,6 +81,14 @@ const Navbar = () => {
 
   const handleToggleCategories = () => {
     setIsCategoriesOpen((prev) => !prev);
+  };
+
+  const handleNotificationMenu = (event) => {
+    setNotification(event.currentTarget);
+  };
+
+  const handleCloseNotificationMenu = () => {
+    setNotification(null);
   };
 
   return (
@@ -187,6 +198,21 @@ const Navbar = () => {
                   </IconButton>
                 </Link>
               </Tooltip>
+              <IconButton onClick={handleNotificationMenu}>
+                <Bell size={30} />
+              </IconButton>
+              <Menu
+                sx={{ mt: "45px", maxWidth: "700px" }}
+                id="menu-appbar"
+                anchorEl={notification}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+                open={Boolean(notification)}
+                onClose={handleCloseNotificationMenu}
+              >
+                <Notifications />
+              </Menu>
             </div>
           </div>
         </div>
@@ -400,6 +426,21 @@ const Navbar = () => {
                 </IconButton>
               </Link>
             </Tooltip>
+            <IconButton onClick={handleNotificationMenu}>
+                <Bell size={30} />
+              </IconButton>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={notification}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+                open={Boolean(notification)}
+                onClose={handleCloseNotificationMenu}
+              >
+                <Notifications />
+              </Menu>
           </div>
         </Drawer>
       </nav>
