@@ -2,14 +2,18 @@ import { Tooltip } from "@mui/material";
 import { Headset } from "lucide-react";
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const customerSupportBaseUrl = "http://localhost:3000/";
 // const customerSupportBaseUrl = 'https://customer-support-rose.vercel.app/'
 const clientChatBaseUrl = "http://localhost:4200/";
 // const clientChatBaseUrl = 'https://client-chat-service.netlify.app/'
 
+const NoAgentAvailable = "../NotFound/NotAgentAvailable.jsx";
+
 const ChatIcon = () => {
   const { token, userId } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleChatClick = async () => {
     try {
@@ -28,9 +32,13 @@ const ChatIcon = () => {
         const data = await response.json();
         console.log("Chat data:", data);
 
-        const chatUrl = `${clientChatBaseUrl}?chatId=${data.id}&userId=${userId}&token=${token}`;
-        window.location.href = chatUrl;
-        // window.open(chatUrl, "_blank");
+        if (data.message === "no agent available") {
+          navigate(`${NoAgentAvailable}`);
+        } else {
+          const chatUrl = `${clientChatBaseUrl}?chatId=${data.id}&userId=${userId}&token=${token}`;
+          // window.location.href = chatUrl;
+          window.open(chatUrl, "_blank");
+        }
       } else {
         const errorData = await response.json();
         console.error("Failed to initiate chat:", errorData);
