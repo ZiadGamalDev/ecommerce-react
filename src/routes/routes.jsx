@@ -19,6 +19,10 @@ const SingleProduct = lazy(() =>
   import("../pages/SingleProduct/SingleProduct.jsx")
 );
 
+const OrderForm = lazy(() => import("../pages/Order/order.jsx"));
+
+const ThankYou = lazy(() => import("../pages/RedirectOrder/Thankyou.jsx"));
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -100,6 +104,8 @@ const routes = createBrowserRouter([
           </Suspense>
         ),
       },
+      { path: "order", element: <OrderForm /> },
+      { path: "thankyou", element: <ThankYou /> },
       { path: "*", element: <NotFound /> },
     ],
   },

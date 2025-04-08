@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { ChevronRight, House, Minus, Plus, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCartData from "../../hooks/useCartData";
 import "./cart.css";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const Cart = () => {
   const { cart, getCart, addToCart, deleteFromCart } = useCartData();
-
+  const Navigate = useNavigate();
   useEffect(() => {
     getCart();
   }, []);
@@ -15,6 +15,10 @@ const Cart = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  const handleNavigate = () => {
+    Navigate("/order");
+  };
 
   return (
     <div className="w-full mx-auto pb-4">
@@ -152,8 +156,11 @@ const Cart = () => {
                 ${cart?.subTotal?.toFixed(2) || "0.00"}
               </span>
             </div>
-            <button className="w-full py-3 bg-[#f04706] text-white font-medium rounded proceed">
-              <span>Proceed to checkout</span>
+            <button
+              className="w-full py-3 bg-[#f04706] text-white font-medium rounded proceed"
+              onClick={handleNavigate}
+            >
+              <span>Place Order</span>
             </button>
           </div>
         </div>
