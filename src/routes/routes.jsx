@@ -6,6 +6,7 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/NotFound/NotFound.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
+import NotAgentAvailable from "../components/NotFound/NotAgentAvailable.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
@@ -101,6 +102,14 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Shop />
+          </Suspense>
+        ),
+      },
+      {
+        path: "NoAgentAvailable",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <NotAgentAvailable />
           </Suspense>
         ),
       },
