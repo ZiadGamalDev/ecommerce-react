@@ -9,7 +9,7 @@ const customerSupportBaseUrl = "http://localhost:3000/";
 const clientChatBaseUrl = "http://localhost:4200/";
 // const clientChatBaseUrl = 'https://client-chat-service.netlify.app/'
 
-const NoAgentAvailable = "../NotFound/NotAgentAvailable.jsx";
+const NoAgentAvailable = "/NoAgentAvailable"; // تعديل المسار
 
 const ChatIcon = () => {
   const { token, userId } = useContext(AuthContext);
@@ -32,16 +32,16 @@ const ChatIcon = () => {
         const data = await response.json();
         console.log("Chat data:", data);
 
-        if (data.message === "no agent available") {
-          navigate(`${NoAgentAvailable}`);
-        } else {
-          const chatUrl = `${clientChatBaseUrl}?chatId=${data.id}&userId=${userId}&token=${token}`;
-          // window.location.href = chatUrl;
-          window.open(chatUrl, "_blank");
-        }
+        const chatUrl = `${clientChatBaseUrl}?chatId=${data.id}&userId=${userId}&token=${token}`;
+        // window.location.href = chatUrl;
+        window.open(chatUrl, "_blank");
       } else {
         const errorData = await response.json();
-        console.error("Failed to initiate chat:", errorData);
+        if (errorData.message === "No agents available") {
+          navigate(NoAgentAvailable);
+        } else {
+          console.error("Failed to initiate chat:", errorData);
+        }
       }
     } catch (error) {
       console.error("Error initiating chat:", error);
