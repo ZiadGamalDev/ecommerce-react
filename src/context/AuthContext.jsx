@@ -25,7 +25,6 @@ export default function AuthProvider({ children }) {
           setRole(userRole);
           localStorage.setItem("role", userRole);
         } catch (error) {
-          console.error("Error decoding token:", error);
           setRole("user");
         }
       }

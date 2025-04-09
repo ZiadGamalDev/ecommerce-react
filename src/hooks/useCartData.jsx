@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback, useMemo } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
@@ -9,24 +9,36 @@ const useCartData = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const headers = { accesstoken: `accesstoken_${token}` };
+  const headers = useMemo(() => {
+    if (!token) return null;
+    return { accesstoken: `accesstoken_${token}` };
+  }, [token]);
+
   const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
-  // Fetch cart data
   const getCart = useCallback(async () => {
-    if (!headers) return;
+    if (!headers) {
+      setCart([]);
+      return;
+    }
     setLoading(true);
+    setError(null);
     try {
       const response = await axios.get(`${baseUrl}cart`, { headers });
-      setCart(response.data.cart);
+
+      if (response.data && response.data.cart) {
+        setCart(response.data.cart);
+      } else {
+        setCart([]);
+      }
     } catch (err) {
       setError(err.response?.data?.message || err.message);
+      setCart([]);
     } finally {
       setLoading(false);
     }
-  }, [headers]);
+  }, [headers, baseUrl]);
 
-  // Add or update item quantity in cart
   const addToCart = async (productId, quantity) => {
     if (!headers) {
       Swal.fire({
@@ -34,31 +46,55 @@ const useCartData = () => {
         icon: "warning",
         title: "Login Before Add to cart",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
       return;
     }
     setLoading(true);
     try {
-      await axios.post(`${baseUrl}cart`, { productId, quantity }, { headers });
+      const response = await axios.post(`${baseUrl}cart`, { productId, quantity }, { headers });
+      
+      if (response.data && response.data.cart) {
+        setCart(response.data.cart);
+        await getCart();
+      }
+
       Swal.fire({
         position: "top-end",
         icon: "success",
         title: "The product has been successfully added to your cart",
         showConfirmButton: false,
-        timer: 2000
+        timer: 2000,
       });
-
-      getCart();
     } catch (err) {
-      setError(err.response?.data?.message || err.message);
-      console.log(err.response?.data?.message || err.message);
+      const errorMessage1 = err.response?.data?.message;
+      const errorMessage2 = err.response?.data?.error_message;
+      const finalErrorMessage = errorMessage1 || errorMessage2 || "An error occurred";
+
+      if (errorMessage1 === "Out of Stock") {
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: "The product is Out of Stock",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "warning",
+          title: errorMessage2,
+          showConfirmButton: false,
+          timer: 5000,
+        });
+      }
+
+      setError(finalErrorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-  // Delete item from cart completely
   const deleteFromCart = async (productId) => {
     if (!headers) {
       Swal.fire({
@@ -72,7 +108,13 @@ const useCartData = () => {
     }
     setLoading(true);
     try {
-      await axios.delete(`${baseUrl}cart/${productId}`, { headers });
+      const response = await axios.delete(`${baseUrl}cart/${productId}`, { headers });
+      
+      if (response.data && response.data.cart) {
+        setCart(response.data.cart);
+        await getCart();
+      }
+
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -80,19 +122,28 @@ const useCartData = () => {
         showConfirmButton: false,
         timer: 2000
       });
-
-      // Fetch updated cart
-      getCart();
     } catch (err) {
-      setError(err.response?.data?.message || err.message);
+      const errorMessage = err.response?.data?.message || err.message;
+      setError(errorMessage);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to delete item: " + errorMessage,
+        showConfirmButton: false,
+        timer: 3000
+      });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    getCart();
-  }, []);
+    if (token) {
+      getCart();
+    } else {
+      setCart([]);
+    }
+  }, [token, getCart]);
 
   return { cart, loading, error, getCart, addToCart, deleteFromCart };
 };

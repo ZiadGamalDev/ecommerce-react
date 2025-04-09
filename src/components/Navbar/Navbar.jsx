@@ -22,7 +22,10 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 import { fetchCategories } from "../../hooks/useProductData";
-import Notifications from './../Notifications/Notifications';
+import Notifications from "./../Notifications/Notifications";
+
+import { useCart } from "../../context/CartContext";
+import { Badge } from "@mui/material";
 
 const Navbar = () => {
   const { token, logout, role } = useContext(AuthContext);
@@ -35,6 +38,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
+  const { cartItemCount } = useCart();
 
   useEffect(() => {
     const getCategories = async () => {
@@ -194,7 +198,9 @@ const Navbar = () => {
               <Tooltip title="Open Cart">
                 <Link to={"/cart"}>
                   <IconButton>
-                    <i className="bi bi-cart text-4xl"></i>
+                    <Badge badgeContent={cartItemCount} color="error" showZero={true}>
+                      <i className="bi bi-cart text-4xl"></i>
+                    </Badge>
                   </IconButton>
                 </Link>
               </Tooltip>
@@ -422,25 +428,27 @@ const Navbar = () => {
             <Tooltip title="Open Cart">
               <Link to={"/cart"}>
                 <IconButton button onClick={toggleDrawer}>
-                  <i className="bi bi-cart text-4xl"></i>
+                  <Badge badgeContent={cartItemCount} color="error" showZero={true}>
+                    <i className="bi bi-cart text-4xl"></i>
+                  </Badge>
                 </IconButton>
               </Link>
             </Tooltip>
             <IconButton onClick={handleNotificationMenu}>
-                <Bell size={30} />
-              </IconButton>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={notification}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                keepMounted
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                open={Boolean(notification)}
-                onClose={handleCloseNotificationMenu}
-              >
-                <Notifications />
-              </Menu>
+              <Bell size={30} />
+            </IconButton>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={notification}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              keepMounted
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              open={Boolean(notification)}
+              onClose={handleCloseNotificationMenu}
+            >
+              <Notifications />
+            </Menu>
           </div>
         </Drawer>
       </nav>
