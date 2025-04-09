@@ -7,6 +7,7 @@ import AuthProvider from "./context/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CartProvider } from "./context/CartContext";
+import { SocketProvider } from "./context/socketContext";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
       <Up_top />
       <AuthProvider>
         <CartProvider>
-          <RouterProvider router={routes} />
+          <SocketProvider>
+            <RouterProvider router={routes} />
+          </SocketProvider>
         </CartProvider>
       </AuthProvider>
     </React.Fragment>
