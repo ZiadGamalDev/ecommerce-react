@@ -200,7 +200,11 @@ const Navbar = () => {
               <Tooltip title="Open Cart">
                 <Link to={"/cart"}>
                   <IconButton>
-                    <Badge badgeContent={cartItemCount} color="error" showZero={true}>
+                    <Badge
+                      badgeContent={cartItemCount}
+                      color="error"
+                      showZero={true}
+                    >
                       <i className="bi bi-cart text-4xl"></i>
                     </Badge>
                   </IconButton>
@@ -397,19 +401,19 @@ const Navbar = () => {
             >
               {token
                 ? [
-                  <MenuItem
-                        key="profileOrDashboard"
-                        onClick={handleCloseUserMenu}
+                    <MenuItem
+                      key="profileOrDashboard"
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Link
+                        to={role === "admin" ? "/dashboard" : "/profile"}
+                        className="text-decoration-none text-black"
                       >
-                        <Link
-                          to={role === "admin" ? "/dashboard" : "/profile"}
-                          className="text-decoration-none text-black"
-                        >
-                          <Typography sx={{ textAlign: "center" }}>
-                            {role === "admin" ? "Dashboard" : "Profile"}
-                          </Typography>
-                        </Link>
-                      </MenuItem>,
+                        <Typography sx={{ textAlign: "center" }}>
+                          {role === "admin" ? "Dashboard" : "Profile"}
+                        </Typography>
+                      </Link>
+                    </MenuItem>,
                     <MenuItem key="logout" onClick={handleCloseUserMenu}>
                       <Typography
                         sx={{ textAlign: "center", cursor: "pointer" }}
@@ -441,14 +445,25 @@ const Navbar = () => {
                       </Link>
                     </MenuItem>,
                   ]}
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography sx={{ textAlign: "center" }}>WishList</Typography>
-              </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    <Link
+                      className="text-decoration-none text-[#000]"
+                      to={"/wishlist"}
+                    >
+                      WishList
+                    </Link>
+                  </Typography>
+                </MenuItem>
             </Menu>
             <Tooltip title="Open Cart">
               <Link to={"/cart"}>
                 <IconButton button onClick={toggleDrawer}>
-                  <Badge badgeContent={cartItemCount} color="error" showZero={true}>
+                  <Badge
+                    badgeContent={cartItemCount}
+                    color="error"
+                    showZero={true}
+                  >
                     <i className="bi bi-cart text-4xl"></i>
                   </Badge>
                 </IconButton>
