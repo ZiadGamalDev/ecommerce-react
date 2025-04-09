@@ -20,12 +20,14 @@ import logo from "../../assets/images/logo.png";
 import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { useNotifications } from "../../hooks/useSocket";
 
 import { fetchCategories } from "../../hooks/useProductData";
-import Notifications from './../Notifications/Notifications';
+import Notifications from "./../Notifications/Notifications";
 
 const Navbar = () => {
-  const { token, logout, role } = useContext(AuthContext);
+  const { token, logout, role, userId } = useContext(AuthContext);
+  const { unreadCount } = useNotifications(userId);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [notification, setNotification] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -198,8 +200,13 @@ const Navbar = () => {
                   </IconButton>
                 </Link>
               </Tooltip>
-              <IconButton onClick={handleNotificationMenu}>
+              <IconButton onClick={handleNotificationMenu} className="relative">
                 <Bell size={30} />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#f04706] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
               </IconButton>
               <Menu
                 sx={{ mt: "45px", maxWidth: "700px" }}
@@ -426,21 +433,26 @@ const Navbar = () => {
                 </IconButton>
               </Link>
             </Tooltip>
-            <IconButton onClick={handleNotificationMenu}>
-                <Bell size={30} />
-              </IconButton>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={notification}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                keepMounted
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                open={Boolean(notification)}
-                onClose={handleCloseNotificationMenu}
-              >
-                <Notifications />
-              </Menu>
+            <IconButton onClick={handleNotificationMenu} className="relative">
+              <Bell size={30} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#f04706] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
+            </IconButton>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={notification}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              keepMounted
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              open={Boolean(notification)}
+              onClose={handleCloseNotificationMenu}
+            >
+              <Notifications />
+            </Menu>
           </div>
         </Drawer>
       </nav>
