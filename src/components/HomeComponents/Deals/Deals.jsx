@@ -157,22 +157,36 @@ const Deals = () => {
                               </span>
                             </button>
                           </Tooltip>
-                          <Tooltip title="Shopping Cart" placement="left">
+                          <Tooltip
+                            title={
+                              product.stock === 0
+                                ? "Out of Stock"
+                                : "Add to Cart"
+                            }
+                            placement="left"
+                          >
                             <button
-                              className="p-2 bg-white rounded shadow-md hover:bg-gray-100 transition-all duration-200 iconHover"
+                              className={`p-2 bg-white rounded shadow-md transition-all duration-200 iconHover ${
+                                product.stock === 0
+                                  ? "opacity-50 cursor-not-allowed"
+                                  : "hover:bg-gray-100"
+                              }`}
                               onClick={() => addToCart(product.id, 1)}
+                              disabled={product.stock === 0}
                             >
                               <span>
                                 <ShoppingCart
                                   size={20}
-                                  className="text-gray-700"
+                                  className={`text-gray-700 ${
+                                    product.stock === 0 ? "opacity-50" : ""
+                                  }`}
                                 />
                               </span>
                             </button>
                           </Tooltip>
                           <Tooltip title="View" placement="left">
                             <Link
-                            to={`/product/${product.id}`}
+                              to={`/product/${product.id}`}
                               className="p-2 bg-white rounded shadow-md hover:bg-gray-100 transition-all duration-200 iconHover"
                             >
                               <span>
