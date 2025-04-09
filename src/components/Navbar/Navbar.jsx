@@ -397,6 +397,19 @@ const Navbar = () => {
             >
               {token
                 ? [
+                  <MenuItem
+                        key="profileOrDashboard"
+                        onClick={handleCloseUserMenu}
+                      >
+                        <Link
+                          to={role === "admin" ? "/dashboard" : "/profile"}
+                          className="text-decoration-none text-black"
+                        >
+                          <Typography sx={{ textAlign: "center" }}>
+                            {role === "admin" ? "Dashboard" : "Profile"}
+                          </Typography>
+                        </Link>
+                      </MenuItem>,
                     <MenuItem key="logout" onClick={handleCloseUserMenu}>
                       <Typography
                         sx={{ textAlign: "center", cursor: "pointer" }}
