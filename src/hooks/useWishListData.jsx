@@ -39,25 +39,37 @@ const useWishList = () => {
       console.error("Invalid product data:", product);
       return;
     }
-  
-    if (wishlist.some((item) => item.productId === product.id)) {
+
+    // Handle Out of Stock
+    if (product.stock === 0) {
       Swal.fire({
-        position: "top-center",
+        position: "top-end",
         icon: "warning",
-        title: "This product is already added to your wishlist!",
+        title: "This product is Out of Stock and cannot be added to your wishlist!",
         showConfirmButton: false,
-        timer: 2500
+        timer: 2500,
       });
       return;
     }
-    
+
+    if (wishlist.some((item) => item.productId === product.id)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "warning",
+        title: "This product is already added to your wishlist!",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      return;
+    }
+
     try {
       const response = await fetch(API_URL, {
         method: "POST",
         headers,
         body: JSON.stringify({ productId: product.id }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         if (errorData.message === "Product already in wishlist") {
@@ -66,13 +78,13 @@ const useWishList = () => {
             icon: "warning",
             title: "This product is already added to your wishlist!",
             showConfirmButton: false,
-            timer: 2500
+            timer: 2500,
           });
           return;
         }
-          throw new Error("Failed to add product to wishlist");
+        throw new Error("Failed to add product to wishlist");
       }
-  
+
       const data = await response.json();
       setWishlist((prev) => [...prev, { productId: product.id }]);
       Swal.fire({
@@ -80,13 +92,12 @@ const useWishList = () => {
         icon: "success",
         title: "The product has been successfully added to your wishlist!",
         showConfirmButton: false,
-        timer: 2500
+        timer: 2500,
       });
     } catch (err) {
       console.error("Error adding to wishlist:", err);
     }
   };
-  
 
   const removeFromWishlist = async (productId) => {
     try {
