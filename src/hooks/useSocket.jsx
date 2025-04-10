@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSocket } from "../context/socketContext";
+import { useSocket } from "../context/NotificationContext";
 export const useNotifications = (userId) => {
   const { socket, isConnected } = useSocket();
   const [notifications, setNotifications] = useState([]);
@@ -10,10 +10,8 @@ export const useNotifications = (userId) => {
   useEffect(() => {
     if (!socket || !isConnected || !userId) return;
 
-    // Authenticate socket with userId
     socket.emit("authenticate", { userId });
 
-    // Listen for all notifications
     socket.on(
       "userNotifications",
       ({ notifications, pagination, unreadCount }) => {
