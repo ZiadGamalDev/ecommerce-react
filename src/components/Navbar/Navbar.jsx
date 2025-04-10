@@ -12,31 +12,29 @@ import {
   Typography,
 } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { Bell } from "lucide-react";
+import { Bell, X } from "lucide-react";
 
 import logo from "../../assets/images/logo.png";
 
-// import styles from "./Navbar.module.css"
 import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { useNotifications } from "../../hooks/useSocket";
-
 import { fetchCategories } from "../../hooks/useProductData";
-import Notifications from "./../Notifications/Notifications";
-
+import Notifications from "../Notifications/Notifications";
+import { useNotificationContext } from "../../context/NotificationContext";
 import { useCart } from "../../context/CartContext";
 import { Badge } from "@mui/material";
 
 const Navbar = () => {
-  const { token, logout, role, userId } = useContext(AuthContext);
-  const { unreadCount } = useNotifications(userId);
+  const { token, logout, role } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [notification, setNotification] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const [categories, setCategories] = useState([]);
+  const { notifications } = useNotificationContext();
+  const [showNotifications, setShowNotifications] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
@@ -89,12 +87,9 @@ const Navbar = () => {
     setIsCategoriesOpen((prev) => !prev);
   };
 
-  const handleNotificationMenu = (event) => {
-    setNotification(event.currentTarget);
-  };
-
-  const handleCloseNotificationMenu = () => {
-    setNotification(null);
+  const toggleNotifications = () => {
+    console.log("Toggling notifications. Current state:", showNotifications);
+    setShowNotifications((prev) => !prev);
   };
 
   return (
@@ -210,26 +205,24 @@ const Navbar = () => {
                   </IconButton>
                 </Link>
               </Tooltip>
-              <IconButton onClick={handleNotificationMenu} className="relative">
-                <Bell size={30} />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-[#f04706] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    {unreadCount > 99 ? "99+" : unreadCount}
-                  </span>
+              <div className="relative">
+                <Tooltip title="Notifications">
+                  <IconButton onClick={toggleNotifications}>
+                    <Badge
+                      badgeContent={notifications.length}
+                      color="error"
+                      showZero={false}
+                    >
+                      <Bell size={30} />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+                {showNotifications && (
+                  <div className="absolute right-0 mt-2">
+                    <Notifications onClose={toggleNotifications} />
+                  </div>
                 )}
-              </IconButton>
-              <Menu
-                sx={{ mt: "45px", maxWidth: "700px" }}
-                id="menu-appbar"
-                anchorEl={notification}
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                keepMounted
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                open={Boolean(notification)}
-                onClose={handleCloseNotificationMenu}
-              >
-                <Notifications />
-              </Menu>
+              </div>
             </div>
           </div>
         </div>
@@ -320,10 +313,16 @@ const Navbar = () => {
           open={mobileOpen}
           onClose={toggleDrawer}
           sx={{
-            "& .MuiDrawer-paper": { width: { sm: "300px", md: "400px" } },
+            "& .MuiDrawer-paper": {
+              width: { sm: "400px", md: "400px", xs: "100%" },
+            },
             display: { lg: "none" },
+            position: "relative",
           }}
         >
+          <div className="flex justify-end p-3">
+            <IconButton onClick={toggleDrawer}><X /></IconButton>
+          </div>
           <List className="flex flex-column mt-3">
             {[
               { name: "Home", path: "/" },
@@ -445,16 +444,16 @@ const Navbar = () => {
                       </Link>
                     </MenuItem>,
                   ]}
-                  <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    <Link
-                      className="text-decoration-none text-[#000]"
-                      to={"/wishlist"}
-                    >
-                      WishList
-                    </Link>
-                  </Typography>
-                </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography sx={{ textAlign: "center" }}>
+                  <Link
+                    className="text-decoration-none text-[#000]"
+                    to={"/wishlist"}
+                  >
+                    WishList
+                  </Link>
+                </Typography>
+              </MenuItem>
             </Menu>
             <Tooltip title="Open Cart">
               <Link to={"/cart"}>
@@ -469,26 +468,24 @@ const Navbar = () => {
                 </IconButton>
               </Link>
             </Tooltip>
-            <IconButton onClick={handleNotificationMenu} className="relative">
-              <Bell size={30} />
-              {unreadCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#f04706] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {unreadCount > 99 ? "99+" : unreadCount}
-                </span>
+            <div className="relative">
+              <Tooltip title="Notifications">
+                <IconButton onClick={toggleNotifications}>
+                  <Badge
+                    badgeContent={notifications.length}
+                    color="error"
+                    showZero={false}
+                  >
+                    <Bell size={30} />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+              {showNotifications && (
+                <div className="absolute right-0 mt-2">
+                  <Notifications onClose={toggleNotifications} />
+                </div>
               )}
-            </IconButton>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={notification}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              keepMounted
-              transformOrigin={{ vertical: "top", horizontal: "right" }}
-              open={Boolean(notification)}
-              onClose={handleCloseNotificationMenu}
-            >
-              <Notifications />
-            </Menu>
+            </div>
           </div>
         </Drawer>
       </nav>

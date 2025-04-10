@@ -41,14 +41,13 @@ const useProfileData = () => {
       return;
     }
     try {
-      const response = await axios.get(`${baseUrl}order/my-order`, {
+      const response = await axios.get(`${baseUrl}order/my-orders`, {
         headers: { accesstoken: `accesstoken_${token}` },
       });
       console.log("Raw orders response:", response.data);
       if (response.data.success) {
         const allOrders = response.data.data || [];
-        const paidOrders = allOrders.filter((order) => order.isPaid === true);
-        setOrders(paidOrders);
+        setOrders(allOrders);
       } else {
         throw new Error(response.data.message || "Failed to fetch orders");
       }

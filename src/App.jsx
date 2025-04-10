@@ -1,3 +1,4 @@
+// App.js
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import "./App.css";
@@ -7,7 +8,7 @@ import AuthProvider from "./context/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CartProvider } from "./context/CartContext";
-import { SocketProvider } from "./context/socketContext";
+import { NotificationProvider } from "./context/NotificationContext";
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
       <Up_top />
       <AuthProvider>
         <CartProvider>
-          <SocketProvider>
-            <RouterProvider router={routes} />
-          </SocketProvider>
+            <NotificationProvider>
+              <RouterProvider router={routes} />
+            </NotificationProvider>
         </CartProvider>
       </AuthProvider>
     </React.Fragment>

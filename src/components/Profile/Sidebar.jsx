@@ -1,8 +1,11 @@
 import { Box, Button, Stack } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Sidebar = ({ setSelectedTab }) => {
   const [activeTab, setActiveTab] = useState("dashboard");
+  
+  const { logout } = useContext(AuthContext);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -40,9 +43,6 @@ const Sidebar = ({ setSelectedTab }) => {
           </Button>
         ))}
       </Stack>
-      <Button variant="contained" color="error">
-        Log Out
-      </Button>
     </Box>
   );
 };
