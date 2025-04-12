@@ -8,7 +8,7 @@ import AuthProvider from "./context/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CartProvider } from "./context/CartContext";
-import { NotificationProvider } from "./context/NotificationContext";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -16,9 +16,7 @@ function App() {
       <Up_top />
       <AuthProvider>
         <CartProvider>
-            <NotificationProvider>
-              <RouterProvider router={routes} />
-            </NotificationProvider>
+          <RouterProvider router={routes} />
         </CartProvider>
       </AuthProvider>
     </React.Fragment>

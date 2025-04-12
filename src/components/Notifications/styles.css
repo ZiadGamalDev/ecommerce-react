@@ -1,68 +1,92 @@
-/* .notifications {
-  max-width: 600px;
-  margin: 0 auto;
-} */
-
 .notifications-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
+}
+
+.notifications-header span {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.notifications-header button {
+  color: #6b7280;
+  transition: color 0.2s ease-in-out;
+}
+
+.notifications-header button:hover {
+  color: #1f2937;
 }
 
 .notifications-list {
-  scrollbar-width: thin;
-  scrollbar-color: #f04706 #f1f1f1;
+  overflow-y: auto;
+  max-height: 350px;
+  padding: 0.5rem;
 }
 
-.notifications-list::-webkit-scrollbar {
-  width: 6px;
+.notifications-list .text-center {
+  text-align: center;
 }
 
-.notifications-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
+.notifications-list .text-gray-500 {
+  color: #6b7280;
 }
 
-.notifications-list::-webkit-scrollbar-thumb {
-  background: #f04706;
-  border-radius: 3px;
+.notifications-list .py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .notification-item {
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  animation: fadeIn 0.3s ease-in-out;
+  background-color: #f9fafb;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  border-left: 4px solid #3b82f6;
 }
 
-.notification-item.unread {
-  background-color: #f0f7ff;
+.notification-item:hover {
+  background-color: #f3f4f6;
 }
 
-.notification-content {
-  flex: 1;
+.notification-item .font-medium {
+  font-weight: 500;
 }
 
-.notification-content h4 {
-  margin: 0 0 0.5rem;
+.notification-item .text-gray-800 {
+  color: #1f2937;
 }
 
-.notification-content p {
-  margin: 0;
-  color: #666;
+.notification-item .text-sm {
+  font-size: 0.875rem;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.notification-item .text-gray-700 {
+  color: #374151;
+}
+
+.notification-item .text-gray-600 {
+  color: #4b5563;
+}
+
+.notification-item .text-xs {
+  font-size: 0.75rem;
+}
+
+.notification-item .text-gray-400 {
+  color: #9ca3af;
+}
+
+.notification-item .mt-1 {
+  margin-top: 0.25rem;
+}
+
+.notification-item .block {
+  display: block;
+}
+
+.notification-item .ml-2 {
+  margin-left: 0.5rem;
 }

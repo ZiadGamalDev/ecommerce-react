@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   CircularProgress,
   Drawer,
@@ -13,33 +13,175 @@ import {
 } from "@mui/material";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { Bell, X } from "lucide-react";
-
-import logo from "../../assets/images/logo.png";
-
-import "./Navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { fetchCategories } from "../../hooks/useProductData";
 import Notifications from "../Notifications/Notifications";
-import { useNotificationContext } from "../../context/NotificationContext";
 import { useCart } from "../../context/CartContext";
 import { Badge } from "@mui/material";
+import socket from "./../../utils/socket";
+import { toast } from "react-toastify";
+
+import logo from "../../assets/images/logo.png";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { token, logout, role } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [notification, setNotification] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [timeoutId, setTimeoutId] = useState(null);
   const [categories, setCategories] = useState([]);
-  const { notifications } = useNotificationContext();
+  const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const location = useLocation();
   const { cartItemCount } = useCart();
 
+  const chatId = localStorage.getItem("chatId");
+
+  const notificationsRef = useRef(null);
+  const bellIconRef = useRef(null);
+
+  // * Receive messages from socket server
+  const listenForMessages = (chatId) => {
+    socket.off("messageReceived");
+
+    socket.on("messageReceived", ({ message }) => {
+      if (message.chatId !== chatId) return;
+
+      if (message.senderRole !== "agent") return;
+
+      const newMessage = {
+        id: message._id || message.id,
+        chatId: message.chatId,
+        senderId: message.senderId?._id || message.senderId,
+        content: message.content,
+        senderRole: message.senderRole,
+        createdAt: message.createdAt ? new Date(message.createdAt) : new Date(),
+      };
+
+      setNotifications((prev) => {
+        if (prev.some((msg) => msg.id === newMessage.id)) {
+          return prev;
+        }
+
+        const updatedNotifications = [newMessage, ...prev];
+        updatedNotifications.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        toast.info(`New message: ${newMessage.content.slice(0, 30)}...`, {
+          toastId: newMessage.id,
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+        return updatedNotifications.slice(0, 5);
+      });
+    });
+  };
+
+  // * Join chat room
+  const joinChat = (existingChatId) => {
+    if (!existingChatId) return;
+
+    if (socket.connected) {
+      socket.emit("joinChat", {
+        chatId: existingChatId,
+        userType: "customer",
+      });
+      listenForMessages(existingChatId);
+    } else {
+      socket.connect();
+      socket.once("connect", () => {
+        socket.emit("joinChat", {
+          chatId: existingChatId,
+          userType: "customer",
+        });
+        listenForMessages(existingChatId);
+      });
+    }
+  };
+
+  // * Fetch messages from backend
+  const getMessagesFromBE = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/messages/customer/${chatId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch messages");
+      }
+
+      const data = await response.json();
+
+      const filtered = data
+        .filter((msg) => msg.senderRole === "agent")
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 5);
+
+      setNotifications(filtered);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      setError(error.message);
+    }
+  };
+
+  // * connect to socket server and listen for messages
+  useEffect(() => {
+    if (chatId) {
+      const fetchMessagesAndJoinChat = async () => {
+        await getMessagesFromBE();
+        joinChat(chatId);
+      };
+
+      fetchMessagesAndJoinChat();
+
+      return () => {
+        socket.off("messageReceived");
+        socket.disconnect();
+      };
+    }
+  }, [chatId]);
+
+  // * close notifications when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target) &&
+        bellIconRef.current &&
+        !bellIconRef.current.contains(event.target) &&
+        showNotifications
+      ) {
+        console.log("Click outside, closing notifications");
+        setShowNotifications(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showNotifications]);
+
+  // * fetch categories
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
@@ -87,10 +229,16 @@ const Navbar = () => {
     setIsCategoriesOpen((prev) => !prev);
   };
 
-  const toggleNotifications = () => {
-    console.log("Toggling notifications. Current state:", showNotifications);
-    setShowNotifications((prev) => !prev);
+  const toggleNotifications = (event) => {
+    event.stopPropagation();
+    setShowNotifications(!showNotifications);
   };
+
+  const closeNotifications = () => {
+    setShowNotifications(false);
+  };
+
+  const notificationCount = notifications ? notifications.length : 0;
 
   return (
     <React.Fragment>
@@ -207,19 +355,23 @@ const Navbar = () => {
               </Tooltip>
               <div className="relative">
                 <Tooltip title="Notifications">
-                  <IconButton onClick={toggleNotifications}>
+                  <IconButton onClick={toggleNotifications} ref={bellIconRef}>
                     <Badge
-                      badgeContent={notifications.length}
+                      badgeContent={notificationCount}
+                      variant={notificationCount > 0 ? "dot" : undefined}
                       color="error"
-                      showZero={false}
+                      overlap="circular"
                     >
-                      <Bell size={30} />
+                      <Bell size={35} />
                     </Badge>
                   </IconButton>
                 </Tooltip>
                 {showNotifications && (
-                  <div className="absolute right-0 mt-2">
-                    <Notifications onClose={toggleNotifications} />
+                  <div className="absolute right-0 mt-2" ref={notificationsRef}>
+                    <Notifications
+                      onClose={closeNotifications}
+                      notifications={notifications}
+                    />
                   </div>
                 )}
               </div>
@@ -228,7 +380,7 @@ const Navbar = () => {
         </div>
 
         {/* Bottom Nav */}
-        <div className="sm:hidden lg:flex bg-white justify-center p-3 shadow-2xs bottom-nav relative">
+        <div className="sm:hidden lg:flex justify-center p-3 shadow-2xs bottom-nav relative border-t border-amber-200">
           <div className="container flex items-center gap-5">
             {[
               { name: "Home", path: "/" },
@@ -262,7 +414,7 @@ const Navbar = () => {
 
                 {link.name === "Categories" && isCategoriesOpen && (
                   <div
-                    className="absolute left-0 top-full w-full bg-white p-4 z-50 transition-opacity duration-300 ease-in-out"
+                    className="absolute left-0 top-full w-full bg-white p-4 transition-opacity duration-300 ease-in-out"
                     style={{
                       opacity: isCategoriesOpen ? 1 : 0,
                       transition: "all 0.3s ease-in-out",
@@ -320,10 +472,12 @@ const Navbar = () => {
             position: "relative",
           }}
         >
-          <div className="flex justify-end p-3">
-            <IconButton onClick={toggleDrawer}><X /></IconButton>
+          <div className="flex justify-end p-2">
+            <IconButton onClick={toggleDrawer}>
+              <X />
+            </IconButton>
           </div>
-          <List className="flex flex-column mt-3">
+          <List className="flex flex-column">
             {[
               { name: "Home", path: "/" },
               { name: "Shop", path: "/shop" },
@@ -470,19 +624,23 @@ const Navbar = () => {
             </Tooltip>
             <div className="relative">
               <Tooltip title="Notifications">
-                <IconButton onClick={toggleNotifications}>
+                <IconButton onClick={toggleNotifications} ref={bellIconRef}>
                   <Badge
                     badgeContent={notifications.length}
+                    variant={notifications.length > 0 ? "dot" : undefined}
                     color="error"
-                    showZero={false}
+                    overlap="circular"
                   >
-                    <Bell size={30} />
+                    <Bell size={35} />
                   </Badge>
                 </IconButton>
               </Tooltip>
               {showNotifications && (
-                <div className="absolute right-0 mt-2">
-                  <Notifications onClose={toggleNotifications} />
+                <div className="absolute right-0 mt-2" ref={notificationsRef}>
+                  <Notifications
+                    onClose={closeNotifications}
+                    notifications={notifications}
+                  />
                 </div>
               )}
             </div>
