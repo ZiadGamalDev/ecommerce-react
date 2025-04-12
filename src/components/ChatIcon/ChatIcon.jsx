@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const customerSupportBaseUrl = "http://localhost:3000/";
 // const customerSupportBaseUrl = 'https://customer-support-rose.vercel.app/'
-const clientChatBaseUrl = "http://localhost:4200/";
-// const clientChatBaseUrl = 'https://client-chat-service.netlify.app/'
+// const clientChatBaseUrl = "http://localhost:4200/";
+const clientChatBaseUrl = 'https://client-chat-service.netlify.app/'
 
 const NoAgentAvailable = "/NoAgentAvailable";
 
