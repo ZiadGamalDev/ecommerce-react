@@ -208,7 +208,7 @@ const OrderForm = () => {
                 loading || stripeLoading
                   ? "bg-gray-400"
                   : "bg-[#f04706] hover:bg-[#d63e00]"
-              } text-white font-medium rounded transition-colors`}
+              } text-white font-medium rounded transition-colors duration-200`}
             >
               {loading || stripeLoading ? (
                 <span className="flex items-center justify-center">
