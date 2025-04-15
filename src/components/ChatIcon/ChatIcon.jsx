@@ -82,7 +82,10 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const customerSupportBaseUrl = "http://localhost:3000/";
+// const customerSupportBaseUrl = 'https://customer-support-rose.vercel.app/'
 const clientChatBaseUrl = "http://localhost:64925/";
+// const clientChatBaseUrl = "http://localhost:4200/";
+// const clientChatBaseUrl = 'https://gudgets-chat.vercel.app/'
 const NoAgentAvailable = "/NoAgentAvailable";
 
 const ChatIcon = () => {
@@ -255,8 +258,9 @@ const ChatIcon = () => {
                   <button
                     type="submit"
                     className="px-4 py-2 bg-[#f04706] text-white rounded hover:bg-[#f04806ca] transition duration-200"
+                    disabled={isLoading}
                   >
-                    Start Chat
+                    {isLoading ? "Starting Chat..." : "Start Chat"}
                   </button>
                 </div>
               </form>
