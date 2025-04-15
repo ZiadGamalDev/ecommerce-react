@@ -82,10 +82,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const customerSupportBaseUrl = "http://localhost:3000/";
-// const customerSupportBaseUrl = 'https://customer-support-rose.vercel.app/'
 const clientChatBaseUrl = "http://localhost:64925/";
-// const clientChatBaseUrl = "http://localhost:4200/";
-// const clientChatBaseUrl = 'https://gudgets-chat.vercel.app/'
 const NoAgentAvailable = "/NoAgentAvailable";
 
 const ChatIcon = () => {
@@ -101,13 +98,27 @@ const ChatIcon = () => {
 
   const handleChatClick = () => {
     console.log("clicked");
+    const savedTitle = localStorage.getItem("lastChatTitle") || "";
+    const savedDescription = localStorage.getItem("lastChatDescription") || "";
+    setTitle(savedTitle);
+    setDescription(savedDescription);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setTitle("");
-    setDescription("");
+  };
+
+  const handleTitleChange = (e) => {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+    localStorage.setItem("lastChatTitle", newTitle);
+  };
+
+  const handleDescriptionChange = (e) => {
+    const newDescription = e.target.value;
+    setDescription(newDescription);
+    localStorage.setItem("lastChatDescription", newDescription);
   };
 
   useEffect(() => {
@@ -150,6 +161,9 @@ const ChatIcon = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Chat data:", data);
+
+        localStorage.setItem("lastChatTitle", data.title || "");
+        localStorage.setItem("lastChatDescription", data.description || "");
 
         const chatId = data.id;
         localStorage.setItem("chatId", chatId);
@@ -212,6 +226,7 @@ const ChatIcon = () => {
                 Start a New Chat
               </h2>
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Title Input */}
                 <div>
                   <label
                     htmlFor="title"
@@ -223,13 +238,14 @@ const ChatIcon = () => {
                     id="title"
                     type="text"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={handleTitleChange}
                     ref={titleInputRef}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04806f4] transition-all duration-200"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04706] transition-all duration-200"
                     placeholder="Enter chat title"
                     aria-label="Chat title"
                   />
                 </div>
+                {/* Description Input */}
                 <div>
                   <label
                     htmlFor="description"
@@ -240,13 +256,14 @@ const ChatIcon = () => {
                   <textarea
                     id="description"
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={handleDescriptionChange}
                     rows={4}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04806f4] transition-all duration-200"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04706] transition-all duration-200"
                     placeholder="Enter chat description"
                     aria-label="Chat description"
                   />
                 </div>
+                {/* Buttons */}
                 <div className="flex justify-end gap-2">
                   <button
                     type="button"
@@ -257,7 +274,7 @@ const ChatIcon = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#f04706] text-white rounded hover:bg-[#f04806ca] transition duration-200"
+                    className="px-4 py-2 bg-[#f04706] text-white rounded hover:bg-[#f04806ce] transition duration-200 disabled:bg-gray-400"
                     disabled={isLoading}
                   >
                     {isLoading ? "Starting Chat..." : "Start Chat"}
