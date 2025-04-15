@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import useCartData from "../../hooks/useCartData";
 import { ChevronRight, House } from "lucide-react";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
+import useWishList from "../../hooks/useWishListData";
 
 export default function SingleProduct() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function SingleProduct() {
   const [error, setError] = useState(null);
   const [mainImage, setMainImage] = useState(""); // Image gallery state
   const { addToCart } = useCartData();
+  const { addToWishlist } = useWishList();
 
   // Fetch product data
   useEffect(() => {
@@ -18,13 +20,24 @@ export default function SingleProduct() {
       setLoading(true);
       setError(null);
       try {
+        const token = localStorage.getItem("token");
+
         const response = await fetch(
-          `https://e-commerce-api-tau-five.vercel.app/product/${id}`
+          `https://e-commerce-api-tau-five.vercel.app/product/${id}`,
+          {
+            headers: {
+              accesstoken: `accesstoken_${token}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
+
         const data = await response.json();
+        console.log(data);
+
         if (data && data.data) {
           setProduct(data.data);
-          setMainImage(data.data.images?.[0]?.secure_url || ""); // Set first image as default
+          setMainImage(data.data.images?.[0]?.secure_url || "");
         } else {
           setError("Product not found");
         }
@@ -35,6 +48,7 @@ export default function SingleProduct() {
         setLoading(false);
       }
     };
+
     fetchProduct();
   }, [id]);
 
@@ -165,7 +179,7 @@ export default function SingleProduct() {
                     ? "bg-blue-600 text-white hover:bg-blue-500 transition duration-150"
                     : "bg-gray-400 text-gray-700 cursor-not-allowed"
                 }`}
-                onClick={() => addToCart(id, 1)}
+                onClick={() => addToWishlist(product)}
                 disabled={stock === 0}
               >
                 {stock > 0 ? "Add to WishList" : "Out of Stock"}
