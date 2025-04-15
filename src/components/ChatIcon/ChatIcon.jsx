@@ -115,18 +115,20 @@ const ChatIcon = () => {
 
   return (
     <React.Fragment>
-      <Tooltip
-        title="Customer Support"
-        placement="top"
-        className="cursor-pointer"
-      >
-        <div
-          onClick={handleChatClick}
-          className="p-3 bg-[#f04706] rounded fixed bottom-26 right-12 z-50 border border-[#fff] shadow-lg hover:bg-[#313c46] transition duration-300 cursor-pointer"
+      {token && (
+        <Tooltip
+          title="Customer Support"
+          placement="top"
+          className="cursor-pointer"
         >
-          <Headset color={"#fff"} size={25} />
-        </div>
-      </Tooltip>
+          <div
+            onClick={handleChatClick}
+            className="p-3 bg-[#f04706] rounded fixed bottom-26 right-12 z-50 border border-[#fff] shadow-lg hover:bg-[#313c46] transition duration-300 cursor-pointer"
+          >
+            <Headset color={"#fff"} size={25} />
+          </div>
+        </Tooltip>
+      )}
 
       {/* Custom Modal with Tailwind CSS */}
       <AnimatePresence>
