@@ -26,9 +26,22 @@ export default function LoginForm() {
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string()
+      .email("Please enter a valid email address")
+      .matches(
+        /^[\w-.]+@([\w-]+\.)+(com|net)$/,
+        "Email must be a .com or .net address"
+      )
+      .test("not-numeric-only", "Email cannot be numbers only", (value) =>
+        isNaN(Number(value?.split("@")[0]))
+      )
+      .required("Email is required"),
+
     password: Yup.string()
-      .min(6, "Password too short")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/,
+        "Password must be 8-30 characters, include uppercase, lowercase, and a number"
+      )
       .required("Password is required"),
   });
 
@@ -113,6 +126,16 @@ export default function LoginForm() {
         disabled={loading}
       >
         {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+      </Button>
+
+      <Button
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        sx={{ mt: 2 }}
+        onClick={() => navigate("/register")}
+      >
+        Register
       </Button>
     </Box>
   );
