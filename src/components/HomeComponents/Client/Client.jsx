@@ -22,7 +22,7 @@ const ClientBox = ({ image }) => {
   };
 
   return (
-    <div className="flex items-center justify-center px-4 py-6 gap-4">
+    <div className="flex items-center justify-center px-4 py-6 gap-4 cursor-pointer">
       <motion.img
         src={image}
         alt="client image"
