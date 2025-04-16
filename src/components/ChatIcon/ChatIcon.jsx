@@ -19,6 +19,15 @@ const ChatIcon = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+  });
+
+  const [touched, setTouched] = useState({
+    title: false,
+    description: false,
+  });
 
   const titleInputRef = useRef(null);
 
@@ -36,15 +45,43 @@ const ChatIcon = () => {
   };
 
   const handleTitleChange = (e) => {
-    const newTitle = e.target.value;
-    setTitle(newTitle);
-    localStorage.setItem("lastChatTitle", newTitle);
+    const value = e.target.value;
+    setTitle(value);
+
+    if (touched.title) {
+      setErrors((prev) => ({
+        ...prev,
+        title: validateTitle(value),
+      }));
+    }
+  };
+
+  const handleTitleBlur = () => {
+    setTouched((prev) => ({ ...prev, title: true }));
+    setErrors((prev) => ({
+      ...prev,
+      title: validateTitle(title),
+    }));
+  };
+
+  const handleDescriptionBlur = () => {
+    setTouched((prev) => ({ ...prev, description: true }));
+    setErrors((prev) => ({
+      ...prev,
+      description: validateDescription(description),
+    }));
   };
 
   const handleDescriptionChange = (e) => {
-    const newDescription = e.target.value;
-    setDescription(newDescription);
-    localStorage.setItem("lastChatDescription", newDescription);
+    const value = e.target.value;
+    setDescription(value);
+
+    if (touched.description) {
+      setErrors((prev) => ({
+        ...prev,
+        description: validateDescription(value),
+      }));
+    }
   };
 
   useEffect(() => {
@@ -69,7 +106,19 @@ const ChatIcon = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const titleError = validateTitle(title);
+    const descriptionError = validateDescription(description);
+
+    setErrors({ title: titleError, description: descriptionError });
+    setTouched({ title: true, description: true });
+
+    if (titleError || descriptionError) {
+      return;
+    }
+
     setIsLoading(true);
+
     try {
       const response = await fetch(`${customerSupportBaseUrl}chats/customer`, {
         method: "POST",
@@ -78,20 +127,18 @@ const ChatIcon = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: title || undefined,
-          description: description || undefined,
+          title,
+          description,
         }),
       });
-      console.log("Submitting chat with title and description");
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Chat data:", data);
+
+        const chatId = data.id;
 
         localStorage.setItem("lastChatTitle", data.title || "");
         localStorage.setItem("lastChatDescription", data.description || "");
-
-        const chatId = data.id;
         localStorage.setItem("chatId", chatId);
 
         const chatUrl = `${clientChatBaseUrl}?chatId=${data.id}&userId=${userId}&token=${token}`;
@@ -112,6 +159,20 @@ const ChatIcon = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const validateTitle = (value) => {
+    if (!value || value.trim().length < 3) {
+      return "Title must be at least 3 characters long";
+    }
+    return "";
+  };
+
+  const validateDescription = (value) => {
+    if (!value || value.trim().length < 10) {
+      return "Description must be at least 10 characters long";
+    }
+    return "";
   };
 
   return (
@@ -167,11 +228,17 @@ const ChatIcon = () => {
                     type="text"
                     value={title}
                     onChange={handleTitleChange}
-                    ref={titleInputRef}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04706] transition-all duration-200"
+                    onBlur={handleTitleBlur}
+                    className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 ${
+                      errors.title
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300 focus:ring-[#f04706]"
+                    }`}
                     placeholder="Enter chat title"
-                    aria-label="Chat title"
                   />
+                  {errors.title && (
+                    <p className="text-sm text-red-500 mt-1">{errors.title}</p>
+                  )}
                 </div>
                 {/* Description Input */}
                 <div>
@@ -185,11 +252,20 @@ const ChatIcon = () => {
                     id="description"
                     value={description}
                     onChange={handleDescriptionChange}
+                    onBlur={handleDescriptionBlur}
                     rows={4}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#f04706] transition-all duration-200"
+                    className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2 transition-all duration-200 ${
+                      errors.description
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300 focus:ring-[#f04706]"
+                    }`}
                     placeholder="Enter chat description"
-                    aria-label="Chat description"
                   />
+                  {errors.description && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.description}
+                    </p>
+                  )}
                 </div>
                 {/* Buttons */}
                 <div className="flex justify-end gap-2">
