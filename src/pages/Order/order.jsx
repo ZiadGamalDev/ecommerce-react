@@ -1,7 +1,10 @@
 import React from "react";
 import OrderForm from "../../components/Order/orderForm"; // Import the OrderForm component
+import { useLocation } from "react-router-dom";
 
 const OrderPage = () => {
+  const location = useLocation();
+  const { couponCode, couponValid } = location.state || {};
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-6xl mx-auto px-4">
@@ -10,7 +13,7 @@ const OrderPage = () => {
         </h1>
 
         {/* Simply render the OrderForm component */}
-        <OrderForm />
+        <OrderForm couponCode={couponCode} />
       </div>
     </div>
   );
