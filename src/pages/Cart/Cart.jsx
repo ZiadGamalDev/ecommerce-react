@@ -123,19 +123,6 @@ const Cart = () => {
               </tbody>
             </table>
           </div>
-
-          <div className="p-4 flex gap-3 couponDiv">
-            <input
-              type="text"
-              placeholder="Coupon code"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
-            />
-            <div className="flex gap-3 cartBtns">
-              <button className="px-4 py-2 bg-gray-700 text-white rounded search">
-                <span>Apply coupon</span>
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Right Section - Cart Totals */}
