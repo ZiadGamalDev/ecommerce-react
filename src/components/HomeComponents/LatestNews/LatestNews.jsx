@@ -128,12 +128,6 @@ const LatestNews = () => {
                   {news.title}
                 </p>
                 <p className="text-gray-600 text-sm mb-4">{news.description}</p>
-                <Link
-                  href={news.link}
-                  className="text-orange-500 font-semibold text-sm"
-                >
-                  READ MORE
-                </Link>
               </div>
             </div>
           </div>
