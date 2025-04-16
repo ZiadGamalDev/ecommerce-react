@@ -385,7 +385,6 @@ const Navbar = () => {
             {[
               { name: "Home", path: "/" },
               { name: "Shop", path: "/shop" },
-              { name: "Categories" },
             ].map((link) => (
               <div
                 key={link.name}
@@ -407,53 +406,7 @@ const Navbar = () => {
                   }`}
                 >
                   {link.name}
-                  {link.name === "Categories" && (
-                    <KeyboardArrowDown className="ml-1" />
-                  )}
                 </Link>
-
-                {link.name === "Categories" && isCategoriesOpen && (
-                  <div
-                    className="absolute left-0 top-full w-full bg-white p-4 transition-opacity duration-300 ease-in-out"
-                    style={{
-                      opacity: isCategoriesOpen ? 1 : 0,
-                      transition: "all 0.3s ease-in-out",
-                    }}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    <div className="mx-auto flex justify-between overflow-auto max-w-screen-lg">
-                      {loading ? (
-                        <div className="flex justify-center items-center h-full">
-                          <CircularProgress />
-                        </div>
-                      ) : (
-                        <div className="mx-auto flex justify-between overflow-auto max-w-screen-lg">
-                          {categories.map((category, index) => (
-                            <div
-                              key={index}
-                              className="flex flex-col gap-2 min-w-[200px]"
-                            >
-                              <p className="mb-2 border-b pb-1 text-md font-bold text-gray-600">
-                                {category.name}
-                              </p>
-                              <span className="flex flex-col gap-3">
-                                {category.brands.map((brand, idx) => (
-                                  <span
-                                    key={idx}
-                                    className="hover:text-yellow-600 cursor-pointer transition-all duration-300 ease-in-out text-gray-500 text-sm"
-                                  >
-                                    {brand.name}
-                                  </span>
-                                ))}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -481,57 +434,16 @@ const Navbar = () => {
             {[
               { name: "Home", path: "/" },
               { name: "Shop", path: "/shop" },
-              { name: "Categories" },
             ].map((link) => (
               <div key={link.name}>
-                {link.name === "Categories" ? (
-                  <div>
-                    <ListItem button onClick={handleToggleCategories}>
-                      <ListItemText primary="Categories" />
-                      <KeyboardArrowDown
-                        className={`ml-1 transition-transform duration-300 ${
-                          isCategoriesOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </ListItem>
-                    {isCategoriesOpen && (
-                      <div className="bg-gray-100 p-3 shadow-md h-[300px] overflow-auto">
-                        {loading ? (
-                          <div className="flex justify-center items-center h-full">
-                            <CircularProgress />
-                          </div>
-                        ) : (
-                          categories.map((category, index) => (
-                            <div key={index} className="mt-2">
-                              <u className="font-bold text-gray-600">
-                                {category.name}
-                              </u>
-                              <ul>
-                                {category.brands.map((brand, idx) => (
-                                  <li
-                                    key={idx}
-                                    className="text-gray-500 text-sm hover:text-yellow-600 cursor-pointer transition-all duration-300"
-                                  >
-                                    {brand.name}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    to={link.path}
-                    className="text-black text-decoration-none text-center"
-                  >
-                    <ListItem button onClick={toggleDrawer}>
-                      <ListItemText primary={link.name} />
-                    </ListItem>
-                  </Link>
-                )}
+                <Link
+                  to={link.path}
+                  className="text-black text-decoration-none text-center"
+                >
+                  <ListItem button onClick={toggleDrawer}>
+                    <ListItemText primary={link.name} />
+                  </ListItem>
+                </Link>
               </div>
             ))}
           </List>
