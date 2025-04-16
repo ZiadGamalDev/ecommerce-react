@@ -144,26 +144,18 @@ export default function RegisterForm() {
             .replace("phoneNumbers", "phone number")
             .replace("addresses", "address")
             .replace("repeat_password", "confirm password")}
-          type={
-            field.includes("password")
-              ? "password"
-              : field === "age" || field === "phoneNumbers"
-              ? "text"
-              : "text"
-          }
+          type={field.includes("password") ? "password" : "text"}
           name={field}
           value={formik.values[field]}
           onChange={(e) => {
-            if (field === "phoneNumbers") {
-              const onlyNums = e.target.value.replace(/\D/g, "").slice(0, 11);
-              formik.setFieldValue(field, onlyNums);
-            } else {
-              formik.handleChange(e);
-            }
+            let value = e.target.value;
 
-            if (field === "age") {
-              const onlyNums = e.target.value.replace(/\D/g, "").slice(0, 3);
-              formik.setFieldValue(field, onlyNums);
+            if (field === "phoneNumbers") {
+              value = value.replace(/\D/g, "").slice(0, 11);
+              formik.setFieldValue(field, value);
+            } else if (field === "age") {
+              value = value.replace(/\D/g, "").slice(0, 3);
+              formik.setFieldValue(field, value);
             } else {
               formik.handleChange(e);
             }
