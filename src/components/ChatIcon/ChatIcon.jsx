@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const customerSupportBaseUrl = "http://localhost:3000/";
-// const clientChatBaseUrl = "http://localhost:64925/";
-const clientChatBaseUrl = "https://gudgets-chat.vercel.app/";
+const clientChatBaseUrl = "http://localhost:61709/";
+// const clientChatBaseUrl = "http://localhost:4200/";
+// const clientChatBaseUrl = "https://gudgets-chat.vercel.app/";
 const NoAgentAvailable = "/NoAgentAvailable";
 
 const ChatIcon = () => {
