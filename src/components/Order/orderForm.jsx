@@ -5,7 +5,7 @@ import useConvertFromCartToOrder from "../../hooks/useConvertFromCartToOrder";
 import usePayWithStripe from "../../hooks/usePayWithStripe";
 import { useNavigate } from "react-router-dom";
 
-const OrderForm = () => {
+const OrderForm = ({ couponCode }) => {
   const navigate = useNavigate();
   const { convertCartToOrder, loading } = useConvertFromCartToOrder();
 
@@ -27,6 +27,7 @@ const OrderForm = () => {
   };
 
   const validationSchema = Yup.object({
+    couponCode: Yup.string().optional(),
     address: Yup.string().required("Address is required"),
     city: Yup.string().required("City is required"),
     postalCode: Yup.string().required("Postal code is required"),
@@ -98,8 +99,8 @@ const OrderForm = () => {
                 type="text"
                 id="couponCode"
                 name="couponCode"
+                value={couponCode}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                placeholder="Enter coupon code"
               />
             </div>
 

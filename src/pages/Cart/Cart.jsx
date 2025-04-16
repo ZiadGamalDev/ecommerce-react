@@ -1,13 +1,25 @@
 import React, { useEffect } from "react";
-import { ChevronRight, House, Minus, Plus, Trash2 } from "lucide-react";
+import { ChevronRight, House, Minus, Plus, Trash2, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useCartData from "../../hooks/useCartData";
+import useCoupon from "../../hooks/useApplyCoupon"; // Import the new hook
 import "./cart.css";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
 
 const Cart = () => {
   const { cart, getCart, addToCart, deleteFromCart } = useCartData();
+  const {
+    loading,
+    error,
+    couponValid,
+    couponCode,
+    setCouponCode,
+    validateCoupon,
+    resetCoupon,
+  } = useCoupon();
+
   const Navigate = useNavigate();
+
   useEffect(() => {
     getCart();
   }, []);
@@ -17,7 +29,7 @@ const Cart = () => {
   }, []);
 
   const handleNavigate = () => {
-    Navigate("/order");
+    Navigate("/order",{state: { couponCode, couponValid }});
   };
 
   return (
@@ -128,14 +140,40 @@ const Cart = () => {
             <input
               type="text"
               placeholder="Coupon code"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-500"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className={`flex-1 px-4 py-2 border rounded-sm focus:outline-none focus:ring-1 focus:ring-gray-500 ${
+                couponValid ? "border-green-500" : "border-gray-300"
+              }`}
             />
             <div className="flex gap-3 cartBtns">
-              <button className="px-4 py-2 bg-gray-700 text-white rounded search">
-                <span>Apply coupon</span>
-              </button>
+              {!couponValid ? (
+                <button
+                  className="px-4 py-2 bg-gray-700 text-white rounded search"
+                  onClick={() => validateCoupon(couponCode)}
+                  disabled={loading || !couponCode.trim()}
+                >
+                  <span>{loading ? "Checking..." : "Apply coupon"}</span>
+                </button>
+              ) : (
+                <button
+                  className="px-4 py-2 bg-green-500 text-white rounded search flex items-center"
+                  onClick={resetCoupon}
+                >
+                  <X size={16} className="mr-1" />
+                  <span>Remove coupon</span>
+                </button>
+              )}
             </div>
           </div>
+          {error && (
+            <div className="px-4 pb-3 text-red-500 text-sm">{error}</div>
+          )}
+          {couponValid && (
+            <div className="px-4 pb-3 text-green-500 text-sm">
+              Valid coupon code! It will be applied at checkout.
+            </div>
+          )}
         </div>
 
         {/* Right Section - Cart Totals */}
@@ -150,6 +188,16 @@ const Cart = () => {
                 </span>
               </div>
             </div>
+
+            {couponValid && (
+              <div className="flex justify-between my-3">
+                <span className="text-gray-600 font-semibold">Coupon</span>
+                <span className="font-medium text-green-500">
+                  {couponCode} (valid)
+                </span>
+              </div>
+            )}
+
             <div className="flex justify-between mb-6 pt-3 border-b border-gray-300 pb-3">
               <span className="text-gray-600 font-semibold">Total</span>
               <span className="text-gray-600 font-semibold">
@@ -159,6 +207,7 @@ const Cart = () => {
             <button
               className="w-full py-3 bg-[#f04706] text-white font-medium rounded proceed"
               onClick={handleNavigate}
+              disabled={cart?.products?.length === 0}
             >
               <span>Place Order</span>
             </button>
