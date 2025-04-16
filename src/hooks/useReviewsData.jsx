@@ -6,13 +6,13 @@ import Swal from "sweetalert2";
 const baseUrl = "https://e-commerce-api-tau-five.vercel.app/review";
 
 const useReviewsData = (productId) => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const headers = { accesstoken: `accesstoken_${token}` };
 
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
   const fetchReviews = useCallback(async (productId) => {
     setLoading(true);
     try {
@@ -34,19 +34,36 @@ const useReviewsData = (productId) => {
         const headers = { accesstoken: `accesstoken_${token}` };
 
         const data = {
-          productId: review.productId,
+          productId: review.id,
           reviewRate: review.rating,
           reviewComment: review.review,
         };
 
+        console.log(data);
+        
+
         const response = await axios.post(`${baseUrl}`, data, { headers });
-        fetchReviews(review.productId);
-      } catch (err) {
-        console.error(
-          "Error adding review:",
-          err.response?.data || err.message
-        );
-        setError(err.response?.data?.message || err.message);
+        fetchReviews(review.id);
+      } 
+      catch (err) {
+        const message = err.response?.data?.message || err.message;
+        setError(message);
+      
+        if (message === "You have already reviewed this product") {
+          Swal.fire({
+            icon: "info",
+            title: "You already reviewed this product",
+            text: "You can update your existing review instead.",
+            confirmButtonText: "OK",
+          });
+        } else {
+          console.error("Error adding review:", message);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: message,
+          });
+        }
       } finally {
         setLoading(false);
       }

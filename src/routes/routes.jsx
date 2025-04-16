@@ -7,6 +7,7 @@ import NotFound from "../components/NotFound/NotFound.jsx";
 import AuthRoute from "./AuthRoute.jsx";
 import GuestRoute from "./GuestRoute.jsx";
 import NotAgentAvailable from "../components/NotFound/NotAgentAvailable.jsx";
+import ProductDetails from "../pages/ProductDetails/ProductDetails.jsx";
 
 const Home = lazy(() => import("../pages/Home/Home.jsx"));
 const Register = lazy(() => import("../pages/Auth/Register.jsx"));
@@ -42,7 +43,7 @@ const routes = createBrowserRouter([
         element: (
           <AuthRoute>
             <Suspense fallback={<Loader />}>
-              <SingleProduct />
+              <ProductDetails />
             </Suspense>
           </AuthRoute>
         ),

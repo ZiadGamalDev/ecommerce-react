@@ -10,16 +10,17 @@ import { useParams } from "react-router-dom";
 import "./details.css";
 import { Alert } from "@mui/material";
 import ChatIcon from "../../components/ChatIcon/ChatIcon";
+import SingleProduct from "../SingleProduct/SingleProduct";
 
 const ProductDetails = () => {
-  const { productId } = useParams();
-  const reviewsData = useReviewsData(productId);
+  const { id } = useParams();
+  const reviewsData = useReviewsData(id);
 
   useEffect(() => {
-    if (productId) {
-      reviewsData.fetchReviews(productId);
+    if (id) {
+      reviewsData.fetchReviews(id);
     }
-  }, [productId, reviewsData.fetchReviews]);
+  }, [id, reviewsData.fetchReviews]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -36,10 +37,10 @@ const ProductDetails = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       if (editingReview) {
-        await reviewsData.updateReview(editingReview._id, values, productId);
+        await reviewsData.updateReview(editingReview._id, values, id);
         setEditingReview(null);
       } else {
-        await reviewsData.addReview({ ...values, productId });
+        await reviewsData.addReview({ ...values, id });
       }
       resetForm();
     },
@@ -111,6 +112,8 @@ const ProductDetails = () => {
             {reviewsData.error}
           </Alert>
         )}
+
+        <SingleProduct />
 
         {/* Reviews List with Slider */}
         {reviewsData.reviews && reviewsData.reviews.length > 0 ? (
