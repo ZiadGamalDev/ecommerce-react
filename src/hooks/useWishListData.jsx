@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 
-const API_URL = "https://e-commerce-api-tau-five.vercel.app/wishList";
+const API_URL = `${import.meta.env.VITE_API_URL}wishList`;
 
 const useWishList = () => {
   const { token } = useContext(AuthContext);

@@ -14,7 +14,7 @@ const useCartData = () => {
     return { accesstoken: `accesstoken_${token}` };
   }, [token]);
 
-  const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
+  const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
   const getCart = useCallback(async () => {
     if (!headers) {

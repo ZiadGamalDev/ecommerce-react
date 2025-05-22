@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
 
-const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
+const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export default function LoginForm() {
   const { saveUser } = useContext(AuthContext);

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
-const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
+const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 const useProfileData = () => {
   const { token } = useContext(AuthContext);

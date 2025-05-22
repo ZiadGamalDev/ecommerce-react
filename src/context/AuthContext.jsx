@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import {jwtDecode} from "jwt-decode";
 
 const AuthContext = createContext();
-const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
 
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState(null);

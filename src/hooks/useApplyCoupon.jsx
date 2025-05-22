@@ -11,7 +11,7 @@ const useCoupon = () => {
   const [couponCode, setCouponCode] = useState("");
 
   const headers = { accesstoken: `accesstoken_${token}` };
-  const baseUrl = "https://e-commerce-api-tau-five.vercel.app/coupon/apply";
+  const baseUrl = `${import.meta.env.VITE_API_URL}coupon/apply`;
 
   const validateCoupon = async (code) => {
     if (!code.trim()) return;

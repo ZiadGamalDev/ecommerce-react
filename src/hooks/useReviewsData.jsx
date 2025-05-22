@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
 
-const baseUrl = "https://e-commerce-api-tau-five.vercel.app/review";
+const baseUrl = `${import.meta.env.VITE_API_URL}review`;
 
 const useReviewsData = (productId) => {
   const { token, user } = useContext(AuthContext);

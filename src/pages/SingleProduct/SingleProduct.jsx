@@ -23,7 +23,7 @@ export default function SingleProduct() {
         const token = localStorage.getItem("token");
 
         const response = await fetch(
-          `https://e-commerce-api-tau-five.vercel.app/product/${id}`,
+          `${import.meta.env.VITE_API_URL}product/${id}`,
           {
             headers: {
               accesstoken: `accesstoken_${token}`,

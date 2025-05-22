@@ -36,7 +36,7 @@ export default function Shop() {
 
   // -- Price range states
   // priceRange will hold [minPrice, maxPrice] from the backend
-  // newPriceRange is the user’s chosen sub-range for filtering
+  // newPriceRange is the user's chosen sub-range for filtering
   const [priceRange, setPriceRange] = useState([]);
   const [newPriceRange, setNewPriceRange] = useState([]);
 
@@ -48,19 +48,19 @@ export default function Shop() {
       try {
         // Fetch all products (assuming your endpoint returns { data, minPrice, maxPrice, ... })
         const productRes = await fetch(
-          "https://e-commerce-api-tau-five.vercel.app/product"
+          `${import.meta.env.VITE_API_URL}product`
         );
         const productData = await productRes.json();
 
         // Fetch categories
         const catRes = await fetch(
-          "https://e-commerce-api-tau-five.vercel.app/category"
+          `${import.meta.env.VITE_API_URL}category`
         );
         const catData = await catRes.json();
 
         // Fetch brands
         const brandRes = await fetch(
-          "https://e-commerce-api-tau-five.vercel.app/brand"
+          `${import.meta.env.VITE_API_URL}brand`
         );
         const brandData = await brandRes.json();
 

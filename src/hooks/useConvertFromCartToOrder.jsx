@@ -13,8 +13,7 @@ const useConvertFromCartToOrder = () => {
   const navigate = useNavigate();
 
   const headers = { accesstoken: `accesstoken_${token}` };
-  const baseUrl =
-    "https://e-commerce-api-tau-five.vercel.app/order/fromcartToOrder";
+  const baseUrl = `${import.meta.env.VITE_API_URL}order/fromcartToOrder`;
 
   const convertCartToOrder = async (orderInfo) => {
     if (!token) {

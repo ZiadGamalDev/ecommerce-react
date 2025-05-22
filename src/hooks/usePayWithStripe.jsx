@@ -14,7 +14,7 @@ const usePayWithStripe = () => {
 
   const headers = { accesstoken: `accesstoken_${token}` };
 
-  const baseUrl = `https://e-commerce-api-tau-five.vercel.app/order/pay`;
+  const baseUrl = `${import.meta.env.VITE_API_URL}/order/pay`;
 
   const payWithStripe = async (orderId) => {
     try {

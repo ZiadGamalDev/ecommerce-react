@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-const baseUrl = "https://e-commerce-api-tau-five.vercel.app/";
+const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export default function RegisterForm() {
   const [error, setError] = useState("");
