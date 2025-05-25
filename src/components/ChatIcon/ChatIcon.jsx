@@ -5,10 +5,8 @@ import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const customerSupportBaseUrl = "http://localhost:3000/";
-// const clientChatBaseUrl = "http://localhost:61709/";
-// const clientChatBaseUrl = "http://localhost:4200/";
-const clientChatBaseUrl = "https://gudgets-chat.vercel.app/";
+const customerSupportBaseUrl = import.meta.env.VITE_SOCKET_URL;
+const clientChatBaseUrl = import.meta.env.VITE_CHAT_CLIENT_URL;
 const NoAgentAvailable = "/NoAgentAvailable";
 
 const ChatIcon = () => {

@@ -116,7 +116,7 @@ const Navbar = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/messages/customer/${chatId}`,
+        `${import.meta.env.VITE_SOCKET_URL}messages/customer/${chatId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

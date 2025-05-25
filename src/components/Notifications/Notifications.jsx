@@ -3,7 +3,7 @@ import "./styles.css";
 import { MailCheck } from "lucide-react";
 
 const Notifications = ({ onClose, notifications }) => {
-  const clientChatBaseUrl = "http://localhost:4200/";
+  const clientChatBaseUrl = import.meta.env.VITE_CHAT_CLIENT_URL;
   const chatId = localStorage.getItem("chatId");
 
   const formatTime = (date) => {
@@ -90,9 +90,7 @@ const Notifications = ({ onClose, notifications }) => {
                     </div>
                   </div>
                 </div>
-              )
-
-
+              );
             })
           )}
         </div>

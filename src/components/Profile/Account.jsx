@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography, Alert, CircularProgress } from "@mu
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const baseUrl = "http://localhost:3000/";
+const baseUrl = import.meta.env.VITE_API_URL;
 
 const Account = ({ profile, token }) => {
   const [message, setMessage] = useState(null);
