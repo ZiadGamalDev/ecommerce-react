@@ -26,4 +26,9 @@ dist-ssr
 .env
 .env.production
 
+# Vercel environment files
+.env.vercel
+.env.production.vercel
+
 .notes
+.vercel
