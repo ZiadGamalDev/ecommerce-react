@@ -4,8 +4,9 @@ A simple e-commerce frontend built with **React.js** to simulate user activity a
 
 ## 🌐 Live Demo
 
-- **Production:** https://ecommerce-react.dinamo-app.com/ (Coming Soon)
-- **Backend API:** https://ecommerce-api.ziadgamal.com/
+- **Production App:** https://ecommerce-customer.ziadgamal.com
+- **Backend API:** https://ecommerce-api.ziadgamal.com
+- **Legacy Vercel:** https://ecommerce-react-two-pi.vercel.app (redirects to new domain)
 
 ## 🎯 Purpose
 
@@ -62,7 +63,7 @@ VITE_CHAT_CLIENT_URL=http://localhost:4201/
 ```bash
 VITE_API_URL=https://ecommerce-api.ziadgamal.com/
 VITE_SOCKET_URL=https://customer-support-api.ziadgamal.com/
-VITE_CHAT_CLIENT_URL=https://ecommerce-chat-angular.dinamo-app.com/
+VITE_CHAT_CLIENT_URL=https://ecommerce-chat.ziadgamal.com/
 ```
 
 ## 🔗 Part of ITI Graduation Project
