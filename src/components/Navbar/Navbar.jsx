@@ -26,7 +26,7 @@ import logo from "../../assets/images/logo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { token, logout, role } = useContext(AuthContext);
+  const { token, logout, role, userId } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
@@ -154,10 +154,57 @@ const Navbar = () => {
 
       return () => {
         socket.off("messageReceived");
-        socket.disconnect();
+        // socket.disconnect(); // Don't disconnect, might be used for notifications
       };
     }
   }, [chatId]);
+
+  // * Authenticate socket and listen for notifications
+  useEffect(() => {
+    if (userId) {
+      if (!socket.connected) {
+        socket.connect();
+      }
+
+      console.log("Authenticating socket for user:", userId);
+      socket.emit("authenticate", { userId });
+
+      const handleNotification = (notification) => {
+        console.log("New notification received:", notification);
+
+        // Format notification to match existing structure if needed
+        const newNotification = {
+          ...notification,
+          id: notification._id || notification.id,
+          createdAt: notification.createdAt ? new Date(notification.createdAt) : new Date(),
+        };
+
+        setNotifications((prev) => {
+          // Avoid duplicates
+          if (prev.some((n) => n.id === newNotification.id)) return prev;
+
+          const updated = [newNotification, ...prev];
+          updated.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+
+          toast.info(`New notification: ${newNotification.content.slice(0, 30)}...`, {
+            toastId: newNotification.id,
+            position: "top-right",
+            autoClose: 3000,
+          });
+
+          return updated.slice(0, 5);
+        });
+      };
+
+      socket.on("notification", handleNotification);
+
+      return () => {
+        socket.off("notification", handleNotification);
+      };
+    }
+  }, [userId]);
 
   // * close notifications when clicking outside of it
   useEffect(() => {
@@ -285,50 +332,50 @@ const Navbar = () => {
               >
                 {token
                   ? [
-                      <MenuItem
-                        key="profileOrDashboard"
-                        onClick={handleCloseUserMenu}
+                    <MenuItem
+                      key="profileOrDashboard"
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Link
+                        to={role === "admin" ? "/dashboard" : "/profile"}
+                        className="text-decoration-none text-black"
                       >
-                        <Link
-                          to={role === "admin" ? "/dashboard" : "/profile"}
-                          className="text-decoration-none text-black"
-                        >
-                          <Typography sx={{ textAlign: "center" }}>
-                            {role === "admin" ? "Dashboard" : "Profile"}
-                          </Typography>
-                        </Link>
-                      </MenuItem>,
-                      <MenuItem key="logout" onClick={handleCloseUserMenu}>
-                        <Typography
-                          sx={{ textAlign: "center", cursor: "pointer" }}
-                          onClick={logout}
-                        >
-                          Logout
+                        <Typography sx={{ textAlign: "center" }}>
+                          {role === "admin" ? "Dashboard" : "Profile"}
                         </Typography>
-                      </MenuItem>,
-                    ]
+                      </Link>
+                    </MenuItem>,
+                    <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                      <Typography
+                        sx={{ textAlign: "center", cursor: "pointer" }}
+                        onClick={logout}
+                      >
+                        Logout
+                      </Typography>
+                    </MenuItem>,
+                  ]
                   : [
-                      <MenuItem key="login" onClick={handleCloseUserMenu}>
-                        <Link
-                          to="/login"
-                          className="text-decoration-none text-black"
-                        >
-                          <Typography sx={{ textAlign: "center" }}>
-                            Login
-                          </Typography>
-                        </Link>
-                      </MenuItem>,
-                      <MenuItem key="register" onClick={handleCloseUserMenu}>
-                        <Link
-                          to="/register"
-                          className="text-decoration-none text-black"
-                        >
-                          <Typography sx={{ textAlign: "center" }}>
-                            Register
-                          </Typography>
-                        </Link>
-                      </MenuItem>,
-                    ]}
+                    <MenuItem key="login" onClick={handleCloseUserMenu}>
+                      <Link
+                        to="/login"
+                        className="text-decoration-none text-black"
+                      >
+                        <Typography sx={{ textAlign: "center" }}>
+                          Login
+                        </Typography>
+                      </Link>
+                    </MenuItem>,
+                    <MenuItem key="register" onClick={handleCloseUserMenu}>
+                      <Link
+                        to="/register"
+                        className="text-decoration-none text-black"
+                      >
+                        <Typography sx={{ textAlign: "center" }}>
+                          Register
+                        </Typography>
+                      </Link>
+                    </MenuItem>,
+                  ]}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography sx={{ textAlign: "center" }}>
                     <Link
@@ -397,13 +444,12 @@ const Navbar = () => {
               >
                 <Link
                   to={link.path || "#"}
-                  className={`px-3 py-2 font-semibold rounded text-decoration-none ${
-                    location.pathname === link.path
-                      ? "bg-gray-800 text-white"
-                      : link.name === "Categories" && isCategoriesOpen
+                  className={`px-3 py-2 font-semibold rounded text-decoration-none ${location.pathname === link.path
+                    ? "bg-gray-800 text-white"
+                    : link.name === "Categories" && isCategoriesOpen
                       ? "bg-gray-800 text-white  links"
                       : "text-black links"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -466,50 +512,50 @@ const Navbar = () => {
             >
               {token
                 ? [
-                    <MenuItem
-                      key="profileOrDashboard"
-                      onClick={handleCloseUserMenu}
+                  <MenuItem
+                    key="profileOrDashboard"
+                    onClick={handleCloseUserMenu}
+                  >
+                    <Link
+                      to={role === "admin" ? "/dashboard" : "/profile"}
+                      className="text-decoration-none text-black"
                     >
-                      <Link
-                        to={role === "admin" ? "/dashboard" : "/profile"}
-                        className="text-decoration-none text-black"
-                      >
-                        <Typography sx={{ textAlign: "center" }}>
-                          {role === "admin" ? "Dashboard" : "Profile"}
-                        </Typography>
-                      </Link>
-                    </MenuItem>,
-                    <MenuItem key="logout" onClick={handleCloseUserMenu}>
-                      <Typography
-                        sx={{ textAlign: "center", cursor: "pointer" }}
-                        onClick={logout}
-                      >
-                        Logout
+                      <Typography sx={{ textAlign: "center" }}>
+                        {role === "admin" ? "Dashboard" : "Profile"}
                       </Typography>
-                    </MenuItem>,
-                  ]
+                    </Link>
+                  </MenuItem>,
+                  <MenuItem key="logout" onClick={handleCloseUserMenu}>
+                    <Typography
+                      sx={{ textAlign: "center", cursor: "pointer" }}
+                      onClick={logout}
+                    >
+                      Logout
+                    </Typography>
+                  </MenuItem>,
+                ]
                 : [
-                    <MenuItem key="login" onClick={handleCloseUserMenu}>
-                      <Link
-                        to="/login"
-                        className="text-decoration-none text-black"
-                      >
-                        <Typography sx={{ textAlign: "center" }}>
-                          Login
-                        </Typography>
-                      </Link>
-                    </MenuItem>,
-                    <MenuItem key="register" onClick={handleCloseUserMenu}>
-                      <Link
-                        to="/register"
-                        className="text-decoration-none text-black"
-                      >
-                        <Typography sx={{ textAlign: "center" }}>
-                          Register
-                        </Typography>
-                      </Link>
-                    </MenuItem>,
-                  ]}
+                  <MenuItem key="login" onClick={handleCloseUserMenu}>
+                    <Link
+                      to="/login"
+                      className="text-decoration-none text-black"
+                    >
+                      <Typography sx={{ textAlign: "center" }}>
+                        Login
+                      </Typography>
+                    </Link>
+                  </MenuItem>,
+                  <MenuItem key="register" onClick={handleCloseUserMenu}>
+                    <Link
+                      to="/register"
+                      className="text-decoration-none text-black"
+                    >
+                      <Typography sx={{ textAlign: "center" }}>
+                        Register
+                      </Typography>
+                    </Link>
+                  </MenuItem>,
+                ]}
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography sx={{ textAlign: "center" }}>
                   <Link
