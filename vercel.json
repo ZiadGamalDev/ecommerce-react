@@ -1,3 +1,10 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://ecommerce-customer.ziadgamal.com/$1",
+      "permanent": true
+    }
+  ]
 }
